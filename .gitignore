@@ -306,7 +306,7 @@ paket-files/
 __pycache__/
 *.pyc
 
-# Cake - Uncomment if you are using it
+# Cake - Uncomment if you are using it]
 # tools/**
 # !tools/packages.config
 
@@ -351,3 +351,4 @@ MigrationBackup/
 
 
 text recognition/MP-Project-5039d0814b97.json
+paper_evaluation_app/android/app/google-services.json

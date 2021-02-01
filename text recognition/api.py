@@ -8,7 +8,7 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 
-@app.route('/', methods = ['GET', 'POST']) 
+@app.route('/', methods = ['POST']) 
 def home():
     if(request.method == 'POST'):
         received_image = Image.open(request.files['img'])
@@ -19,4 +19,8 @@ def home():
         # print(type(byte_im))
         return jsonify({'text': text_recognition.recognize(byte_image)}) 
 
-app.run()
+# app.run()
+
+# if __name__ == '__main__':
+app.debug = True
+app.run(host = '192.168.43.105',port=5000)

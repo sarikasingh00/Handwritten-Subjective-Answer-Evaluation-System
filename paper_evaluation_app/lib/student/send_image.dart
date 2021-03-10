@@ -14,6 +14,7 @@ class SendImage {
     var length = await imageFile.length();
 
     // string to uri
+    // var uri = Uri.parse("http://192.168.0.102:5000/");
     var uri = Uri.parse("http://192.168.43.105:5000/");
 
     // create multipart request

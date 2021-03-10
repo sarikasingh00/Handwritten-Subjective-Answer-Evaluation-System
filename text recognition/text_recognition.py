@@ -15,5 +15,6 @@ def recognize(content):
 
     docText = response.full_text_annotation.text
     print(docText)
+    #fucntion call to spell checker
     return docText
     # return ""

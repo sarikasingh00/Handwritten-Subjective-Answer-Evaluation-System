@@ -1,42 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:paper_evaluation_app/teacher/question_paper/question_detail_screen.dart';
 import 'package:paper_evaluation_app/teacher/question_paper/question_paper_detail_screen.dart';
 import '../teacher_db.dart';
 
-class QuestionPaperListView extends StatefulWidget {
+class QuestionListView extends StatefulWidget {
   final String subjectName;
+  final String questionPaperName;
 
   @override
-  _QuestionPaperListViewState createState() => _QuestionPaperListViewState();
+  _QuestionListViewState createState() => _QuestionListViewState();
 
-  QuestionPaperListView(this.subjectName);
+  QuestionListView(this.subjectName, this.questionPaperName);
 }
 
-class _QuestionPaperListViewState extends State<QuestionPaperListView> {
+class _QuestionListViewState extends State<QuestionListView> {
   @override
   Widget build(BuildContext context) {
     // return Container(child: Text("Question papers of ${widget.subjectName}"));
     return FutureBuilder(
-        future: TeacherDB().getQuestionPapers(widget.subjectName),
+        future: TeacherDB().getQuestions(widget.subjectName, widget.questionPaperName),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasData) {
-            List<String> questionPaperList = snapshot.data;
+            List<String> questionList = snapshot.data;
+            questionList.sort();
             return Container(
               height: MediaQuery.of(context).size.height * 0.8,
-              child: questionPaperList.isEmpty ?Container(height: MediaQuery.of(context).size.height * 0.8, child: Text("No question papers"),) :ListView.builder(
-                  itemCount: questionPaperList.length,
+              child: questionList.isEmpty ?Container(height: MediaQuery.of(context).size.height * 0.8, child: Text("No questions"),) :ListView.builder(
+                  itemCount: questionList.length,
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 5,
                       child: ListTile(
-                        title: Text('${questionPaperList[index]}'),
+                        title: Text('${questionList[index]}'),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
+                                    QuestionDetailScreen(widget.subjectName, widget.questionPaperName, questionList[index])),
                           );
                         },
                       ),

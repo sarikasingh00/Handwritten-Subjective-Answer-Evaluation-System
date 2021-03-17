@@ -78,7 +78,7 @@ class StudentDB {
     return questionsList;
   }
 
-  Future<Map<String,String>> getQuestionText(String uid, String subjectName, String questionPaperName, String questionNumber) async {
+  Future<Map<String,dynamic>> getQuestionText(String uid, String subjectName, String questionPaperName, String questionNumber) async {
     // FirebaseUser user;
     // await FirebaseAuth.instance.currentUser().then((value) => user = value);
     DocumentReference questionDocument = Firestore.instance
@@ -91,10 +91,11 @@ class StudentDB {
         .collection('questions')
         .document(questionNumber);
     
-    Map<String,String> questionText;
+    Map<String,dynamic> questionText;
 
     await questionDocument.get().then((doc) {
-      questionText = {'question' : doc.data['question'], 'total_marks':  doc.data['total_marks'].toString()};
+      // questionText = {'question' : doc.data['question'], 'total_marks':  doc.data['total_marks'].toString(), 'answer': doc.data['answer']};
+      questionText = doc.data;
       print(questionText);
     }).catchError((e){
       print("Error getting question text $e");

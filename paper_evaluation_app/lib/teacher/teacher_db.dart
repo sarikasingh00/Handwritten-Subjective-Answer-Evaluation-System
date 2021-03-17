@@ -213,7 +213,7 @@ class TeacherDB {
     if (documentData.containsKey('answer')) {
       print(documentData);
       Map<dynamic, dynamic> answerMap = documentData['answer'];
-      answerMap[keyPhrase] = marks;
+      answerMap["\"$keyPhrase\""] = marks;
       await currQuestionDocument
           .updateData({'answer': answerMap, 'total_marks': FieldValue.increment(marks)}).then((value) {
         print("Keyphrase added successfully in existing case");
@@ -230,7 +230,7 @@ class TeacherDB {
     } 
     else {
       await currQuestionDocument
-          .updateData({'answer': {keyPhrase:marks}, 'total_marks':marks}).then((value) {
+          .updateData({'answer': {"\"$keyPhrase\"":marks}, 'total_marks':marks}).then((value) {
         print("Keyphrase added successfully in non existing case");
         Navigator.of(context).pop();
         scaffoldKey.currentState.showSnackBar(SnackBar(

@@ -67,7 +67,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
-                Map<String, String> questionText = snapshot.data;
+                Map<String, dynamic> questionText = snapshot.data;
                 return Column(
                   children: [
                     Container(
@@ -75,7 +75,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       child: Column(
                         children: [
                           Text(questionText['question']),
-                          Text(questionText['total_marks']),
+                          Text(questionText['total_marks'].toString()),
                         ],
                       ),
                     ),
@@ -110,7 +110,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                 onPressed: () {
                                   if (_image != null) {
                                     SendImage()
-                                        .getExtractedText(_image)
+                                        .getExtractedText(_image, questionText['answer'].toString())
                                         .then((value) {
                                       print("hello $value");
                                       setState(() {

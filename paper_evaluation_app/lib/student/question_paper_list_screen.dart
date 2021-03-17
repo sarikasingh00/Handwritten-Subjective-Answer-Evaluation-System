@@ -4,7 +4,6 @@ import 'package:paper_evaluation_app/student/question_list_screen.dart';
 import 'package:paper_evaluation_app/student/student_db.dart';
 
 class QuestionPaperListScreen extends StatelessWidget {
-  
   String teacherUid;
   String subjectName;
 
@@ -30,7 +29,8 @@ class QuestionPaperListScreen extends StatelessWidget {
           ],
         ),
         body: FutureBuilder(
-            future: StudentDB().getQuestionPapers(teacherUid, subjectName),
+            future: StudentDB()
+                .getQuestionPapers(teacherUid, subjectName),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -49,8 +49,10 @@ class QuestionPaperListScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        QuestionListScreen(teacherUid,subjectName,questionPaperList[index])),
+                                    builder: (context) => QuestionListScreen(
+                                        teacherUid,
+                                        subjectName,
+                                        questionPaperList[index])),
                               );
                             },
                           ),

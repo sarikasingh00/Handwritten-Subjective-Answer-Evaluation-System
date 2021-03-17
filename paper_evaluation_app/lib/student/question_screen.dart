@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paper_evaluation_app/authentication/user_management.dart';
 import 'package:paper_evaluation_app/student/student_db.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:paper_evaluation_app/student/send_image.dart';
 
-class QuestionScreen extends StatelessWidget {
+class QuestionScreen extends StatefulWidget {
   String teacherUid;
   String subjectName;
   String questionPaperName;
@@ -12,7 +15,28 @@ class QuestionScreen extends StatelessWidget {
   QuestionScreen(this.teacherUid, this.subjectName, this.questionPaperName,
       this.questionNumber);
 
+  @override
+  _QuestionScreenState createState() => _QuestionScreenState();
+}
+
+class _QuestionScreenState extends State<QuestionScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  File _image;
+
+  String _text = "No text";
+
+  Future getImage(bool isCamera) async {
+    File image;
+    if (isCamera) {
+      image = await ImagePicker.pickImage(source: ImageSource.camera);
+    } else {
+      image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    }
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +58,76 @@ class QuestionScreen extends StatelessWidget {
         ),
         body: FutureBuilder(
             future: StudentDB().getQuestionText(
-                teacherUid, subjectName, questionPaperName, questionNumber),
+                widget.teacherUid,
+                widget.subjectName,
+                widget.questionPaperName,
+                widget.questionNumber),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
                 Map<String, String> questionText = snapshot.data;
-                return Container(
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    child: Column(
-                      children: [
-                        Text(questionText['question']),
-                        Text(questionText['total_marks']),
-                      ],
-                    ));
+                return Column(
+                  children: [
+                    Container(
+                      //height: MediaQuery.of(context).size.height * 0.8,
+                      child: Column(
+                        children: [
+                          Text(questionText['question']),
+                          Text(questionText['total_marks']),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.insert_drive_file),
+                              onPressed: () {
+                                getImage(false);
+                              },
+                            ),
+                            SizedBox(height: 10.0),
+                            IconButton(
+                              icon: Icon(Icons.camera_alt),
+                              onPressed: () {
+                                getImage(true);
+                              },
+                            ),
+                            _image == null
+                                ? Container()
+                                : Image.file(
+                                    _image,
+                                    height: 300.0,
+                                    width: 300.0,
+                                  ),
+                            RaisedButton(
+                                child: Text("Send Image"),
+                                onPressed: () {
+                                  if (_image != null) {
+                                    SendImage()
+                                        .getExtractedText(_image)
+                                        .then((value) {
+                                      print("hello $value");
+                                      setState(() {
+                                        _text = value;
+                                        print("in widget tree $_text");
+                                      });
+                                    });
+                                  } else {
+                                    print("Error");
+                                  }
+                                }),
+                            Text(_text),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
               } else
                 return Container();
             }));

@@ -39,17 +39,21 @@ class _SubjectListViewState extends State<SubjectListView> {
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 5,
-                      
-                      child: ListTile(
-                        title: Text('${subjectList[index]}'),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SubjectDetailScreen(subjectList[index])),
-                          );
-                        },
+                      child: Container(
+                        height: 80,
+                        child: ListTile(
+                          leading: const Icon(Icons.assignment),
+                          tileColor: Color(0xFFF1E6FF),
+                          title: Text('${subjectList[index]}'),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SubjectDetailScreen(subjectList[index])),
+                            );
+                          },
+                        ),
                       ),
                     );
                   }),

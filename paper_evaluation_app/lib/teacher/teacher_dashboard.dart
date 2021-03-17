@@ -29,6 +29,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
       backgroundColor: Theme.of(context).primaryColor,
       key: _scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Color(0xFF6F35A5),
         title: Text("Teacher Dashboard"),
         actions: [
           FlatButton(
@@ -48,11 +49,21 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             // ),
             SubjectListView(),
             // List view of subjects under teacher
-            FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                _startAddNewSubject(context, _scaffoldKey);
-              },
+            ButtonTheme(
+              minWidth: 300.0,
+              height: 50.0,
+              child:Container(
+                margin:const EdgeInsets.only(top: 15.0),
+                child: RaisedButton(
+                color: Color(0xFF6F35A5),
+                textColor: Colors.white,
+                child: Text('Add Subject'),
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                onPressed: () {
+                  _startAddNewSubject(context, _scaffoldKey);
+                },
+            ),
+              ),
             )
           ],
         ),

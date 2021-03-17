@@ -30,6 +30,7 @@ class _QuestionPaperListViewState extends State<QuestionPaperListView> {
                     return Card(
                       elevation: 5,
                       child: ListTile(
+                        tileColor: Color(0xFFF1E6FF),
                         title: Text('${questionPaperList[index]}'),
                         onTap: () {
                           Navigator.push(

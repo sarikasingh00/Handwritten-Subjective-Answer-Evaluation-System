@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:paper_evaluation_app/components/rounded_button.dart';
+import 'package:paper_evaluation_app/components/rounded_input_field.dart';
+import 'package:paper_evaluation_app/components/rounded_name_field.dart';
+import 'package:paper_evaluation_app/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:paper_evaluation_app/authentication/user_management.dart';
+
+import 'back.dart';
+import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -16,56 +24,60 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.cyan,
-      body: Center(
-        child: Card(
-          elevation: 5,
-          shadowColor: Colors.grey,
-          child: Container(
-            height: MediaQuery.of(context).size.height*0.5,
-            width: MediaQuery.of(context).size.width*0.9,
-            padding: EdgeInsets.all(25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Sign Up", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                TextField(
-                  decoration: InputDecoration(hintText: 'Name'),
-                  onChanged: (value) {
-                    setState(() {
-                      _name = value;
-                      print(_name);
-                    });
-                  },
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(hintText: 'Email'),
-                  onChanged: (value) {
-                    setState(() {
-                      _email = value;
-                      print(_email);
-                    });
-                  },
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  obscureText: true,
-                  // keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(hintText: 'Password'),
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value;
-                      print(_password);
-                    });
-                  },
-                ),
-                SizedBox(height: 20),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.9,
-                  child: new DropdownButton<String>(isExpanded: true,
+      body: Back(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "SIGNUP",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: size.height * 0.03),
+              SvgPicture.asset(
+                "assets/icons/signup.svg",
+                height: size.height * 0.35,
+              ),
+              RoundedNameField(
+                onChanged: (value) {
+                  setState(() {
+                    _name = value;
+                    print(_name);
+                  });
+                },
+              ),
+              RoundedInputField(
+                hintText: "Your Email",
+                onChanged: (value) {
+                  setState(() {
+                    _email = value;
+                    print(_email);
+                  });
+                },
+              ),
+              RoundedPasswordField(
+                onChanged: (value) {
+                  setState(() {
+                    _password = value;
+                    print(_password);
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: Color(0xFFF1E6FF),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                    ),
+                  ),
+                  child: new DropdownButton<String>(
+                    isExpanded: true,
                     hint: Text("Role"),
                     value: _role,
                     items: <String>['Teacher', 'Student'].map((String value) {
@@ -82,28 +94,34 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 20),
-                RaisedButton(
-                  child:
-                      _isLoading ? CircularProgressIndicator() : Text("Signup"),
-                  elevation: 7.0,
-                  onPressed: () {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                    FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
-                            email: _email, password: _password)
-                        .then((signedInUser) {
-                      UserManagement().storeNewUser(
-                          signedInUser.user, _role, _name, context);
-                    }).catchError((e) {
-                      print(e);
-                    });
-                  },
-                )
-              ],
-            ),
+              ),
+              RoundedButton(
+                text: "SIGNUP",
+                press: () {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: _email, password: _password)
+                      .then((signedInUser) {
+                    UserManagement()
+                        .storeNewUser(signedInUser.user, _role, _name, context);
+                  }).catchError((e) {
+                    print(e);
+                  });
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              FlatButton(
+                child: Text("Already have an account? Login here!"),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/loginpage');
+                },
+              ),
+            ],
           ),
         ),
       ),

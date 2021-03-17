@@ -116,6 +116,7 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
+          backgroundColor: Color(0xFF6F35A5),
           title: Text(widget.questionPaperName),
         ),
         floatingActionButton: SpeedDial(

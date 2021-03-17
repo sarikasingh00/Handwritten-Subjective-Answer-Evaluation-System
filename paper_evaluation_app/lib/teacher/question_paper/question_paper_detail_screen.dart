@@ -34,7 +34,11 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text(widget.questionPaperName),),
+      appBar: AppBar(
+        title: Text(widget.questionPaperName,),
+        backgroundColor: Color(0xFF6F35A5),
+        ),
+      
       body: Container(
         // height: MediaQuery.of(context).size.height*0.8,
         child: Column(
@@ -51,15 +55,25 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
                 }
             ),
             // List view of subjects under teacher
-            FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                TeacherDB().addQuestion(widget.subjectName, widget.questionPaperName, context, _scaffoldKey);
-                setState(() {
-                  
-                });
-                // _startAddNewQuestion(columnContext, _scaffoldKey);
-              }
+            ButtonTheme(
+              minWidth: 300.0,
+              height: 50.0,
+              
+              child:Container(
+                margin: const EdgeInsets.only(left: 10,top: 10,right: 10),
+                child: RaisedButton(
+                color: Color(0xFF6F35A5),
+                textColor: Colors.white,
+                child: Text('Add Question'),
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                onPressed: () {
+                  TeacherDB().addQuestion(widget.subjectName, widget.questionPaperName, context, _scaffoldKey);
+                  setState(() { 
+                  });
+                  // _startAddNewQuestion(columnContext, _scaffoldKey);
+                }
+            ),
+              )
             )
           ],
         ),

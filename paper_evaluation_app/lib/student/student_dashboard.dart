@@ -23,6 +23,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Student Dashboard"),
+        backgroundColor: Color(0xFF6F35A5),
         actions: [
           FlatButton(
               onPressed: () {

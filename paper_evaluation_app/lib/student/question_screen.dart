@@ -45,6 +45,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Student Dashboard"),
+          backgroundColor: Color(0xFF6F35A5),
           actions: [
             FlatButton(
                 onPressed: () {

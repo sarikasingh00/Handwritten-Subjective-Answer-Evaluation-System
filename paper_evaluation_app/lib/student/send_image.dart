@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class SendImage {
-  Future<String> getExtractedText(File imageFile) async {
+  Future<String> getExtractedText(File imageFile, String modelAnswer) async {
     String text = "";
     // open a bytestream
     var stream =
@@ -26,6 +26,8 @@ class SendImage {
 
     // add file to multipart
     request.files.add(multipartFile);
+    print(modelAnswer);
+    request.fields['model_answer'] = modelAnswer;
 
     // send
     var response = await request.send();

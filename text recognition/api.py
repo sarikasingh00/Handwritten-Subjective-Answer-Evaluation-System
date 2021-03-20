@@ -30,12 +30,13 @@ def home():
         buffer = io.BytesIO()
         received_image.save(buffer, format='JPEG')
         byte_image = buffer.getvalue()
+        text = text_recognition.recognize(byte_image, model_answer_map)
         # print(type(byte_im))
-        return jsonify({'text': sim.evaluate(text_recognition.recognize(byte_image, model_answer_map),model_answer_map)}) 
+        return jsonify({'marks': sim.evaluate(text,model_answer_map), 'text': text}) 
 
 # app.run()
 
 if __name__ == '__main__':
     sim = similarity.SimilarityModule()
     # app.debug = True
-    app.run(host = '192.168.0.108',port=5000, use_reloader=False)
+    app.run(host = '192.168.1.14',port=5000, use_reloader=False)

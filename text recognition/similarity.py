@@ -51,13 +51,13 @@ class SimilarityModule():
         print("in evaluate")
         self.r.extract_keywords_from_text(student_answer)
         student_keywords = self.r.get_ranked_phrases()
-    #     print(student_keywords)
+        print(student_keywords)
         marks = 0
         for sentence in model_answer.keys():
             sum = 0
             self.r.extract_keywords_from_text(sentence)
             sentence_keywords = self.r.get_ranked_phrases()
-    #         print(sentence_keywords)
+            print(sentence_keywords)
             for sentence_keyword in sentence_keywords:
                 best = None
                 match = None
@@ -71,8 +71,10 @@ class SimilarityModule():
                         match = student_keyword
                 if best != math.inf:
                     sum += best
-    #                 print(sentence_keyword,",",match,",", best)
+                    print(sentence_keyword,",",match,",", best)
             if round(sum/len(sentence_keywords),1) <= 1:
                 marks += float(model_answer[sentence])
+            elif round(sum/len(sentence_keywords),1) > 1 and round(sum/len(sentence_keywords),1) <= 1.1:
+                marks += float(model_answer[sentence]) *0.5
         print(marks)
-        return marks
+        return str(marks)

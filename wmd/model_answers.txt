@@ -4,7 +4,7 @@
 },
 
 {
-  "Mutual Exclusion Condition: It specifies that the resources involved are non-sharable." : 1,
+  	"Mutual Exclusion Condition: It specifies that the resources involved are non-sharable." : 1,
 	"Hold and Wait Condition: It specifies that there must be a process that is holding a resource already allocated to it while waiting for additional resource that are currently being held by other processes." : 1,
 	"No-Preemptive Condition: Resources cannot be taken away while they are being used by processes." : 1,
 	"Circular Wait Condition: It is an explanation of the second condition. It specifies that the processes in the system form a circular list or a chain where each process in the chain is waiting for a resource held by next process in the chain." : 1

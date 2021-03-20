@@ -49,7 +49,8 @@ class StudentDB {
         .collection('subjects')
         .document(subjectName)
         .collection('question_papers');
-    QuerySnapshot questionPapers = await questionPapersCollection.getDocuments();
+    QuerySnapshot questionPapers =
+        await questionPapersCollection.getDocuments();
     List<String> questionPapersList = [];
     questionPapers.documents.forEach((element) {
       questionPapersList.add(element.documentID);
@@ -58,7 +59,8 @@ class StudentDB {
     return questionPapersList;
   }
 
-  Future<List<String>> getQuestions(String uid, String subjectName, String questionPaperName) async {
+  Future<List<String>> getQuestions(
+      String uid, String subjectName, String questionPaperName) async {
     // FirebaseUser user;
     // await FirebaseAuth.instance.currentUser().then((value) => user = value);
     CollectionReference questionsCollection = Firestore.instance
@@ -78,7 +80,8 @@ class StudentDB {
     return questionsList;
   }
 
-  Future<Map<String,dynamic>> getQuestionText(String uid, String subjectName, String questionPaperName, String questionNumber) async {
+  Future<Map<String, dynamic>> getQuestionText(String uid, String subjectName,
+      String questionPaperName, String questionNumber) async {
     // FirebaseUser user;
     // await FirebaseAuth.instance.currentUser().then((value) => user = value);
     DocumentReference questionDocument = Firestore.instance
@@ -90,17 +93,60 @@ class StudentDB {
         .document(questionPaperName)
         .collection('questions')
         .document(questionNumber);
-    
-    Map<String,dynamic> questionText;
+
+    Map<String, dynamic> questionText;
 
     await questionDocument.get().then((doc) {
       // questionText = {'question' : doc.data['question'], 'total_marks':  doc.data['total_marks'].toString(), 'answer': doc.data['answer']};
       questionText = doc.data;
       print(questionText);
-    }).catchError((e){
+    }).catchError((e) {
       print("Error getting question text $e");
     });
     print(questionText);
     return questionText;
+  }
+
+  Future<void> addAnswer(
+      String uid,
+      String subjectName,
+      String questionPaperName,
+      String questionNumber,
+      String text,
+      String marks) async {
+    FirebaseUser user;
+    await FirebaseAuth.instance.currentUser().then((value) => user = value);
+    CollectionReference studentAnswerCollection = Firestore.instance
+        .collection('users')
+        .document(uid)
+        .collection('subjects')
+        .document(subjectName)
+        .collection('question_papers')
+        .document(questionPaperName)
+        .collection('answers');
+      
+    QuerySnapshot students =  await studentAnswerCollection.getDocuments();
+    bool exists = false;
+    students.documents.forEach((element) {
+      if(element.documentID == user.uid)
+        exists = true;
+     });
+
+    if(!exists){
+      studentAnswerCollection.document(user.uid).setData({}).then((value) => null).catchError((e){
+        print("Error creating a new doc $e");
+      });
+    }
+
+    studentAnswerCollection.document(user.uid)
+        .updateData({
+          questionNumber: {text: double.parse(marks), 'submitted': true},
+          'total_marks': FieldValue.increment(double.parse(marks)),
+          'finished_attempt' : false
+        })
+        .then((value) => print("added answer to db"))
+        .catchError((e) {
+          print("Error on adding answer to db $e");
+        });
   }
 }

@@ -59,10 +59,10 @@ class StudentDB {
     return questionPapersList;
   }
 
-  Future<List<String>> getQuestions(
+  Future<List<Map<String, bool>>> getQuestions(
       String uid, String subjectName, String questionPaperName) async {
-    // FirebaseUser user;
-    // await FirebaseAuth.instance.currentUser().then((value) => user = value);
+    FirebaseUser user;
+    await FirebaseAuth.instance.currentUser().then((value) => user = value);
     CollectionReference questionsCollection = Firestore.instance
         .collection('users')
         .document(uid)
@@ -71,12 +71,55 @@ class StudentDB {
         .collection('question_papers')
         .document(questionPaperName)
         .collection('questions');
-    QuerySnapshot questions = await questionsCollection.getDocuments();
-    List<String> questionsList = [];
-    questions.documents.forEach((element) {
-      questionsList.add(element.documentID);
-      print(element.documentID);
+
+    DocumentReference answersDocument = Firestore.instance
+        .collection('users')
+        .document(uid)
+        .collection('subjects')
+        .document(subjectName)
+        .collection('question_papers')
+        .document(questionPaperName)
+        .collection('answers')
+        .document(user.uid);
+
+    // Map<String,Map<String,dynamic>> answers;
+    Map<String, dynamic> answers;
+    await answersDocument.get().then((doc) {
+      answers = doc.data;
     });
+    print("answers " + answers.toString());
+    QuerySnapshot questions = await questionsCollection.getDocuments();
+    List<Map<String, bool>> questionsList = [];
+    questions.documents.forEach((element) {
+      if (answers != null) {
+        if (answers.containsKey(element.documentID)) {
+          questionsList.add(
+              {element.documentID: answers[element.documentID]['submitted']});
+          print(element.documentID);
+        } else {
+          questionsList.add({element.documentID: false});
+          print(element.documentID);
+        }
+      } else {
+        print("in else");
+        questionsList.add({element.documentID: false});
+        print(element.documentID);
+      }
+    });
+
+    if (answers != null) {
+      if (answers.containsKey('finished_attempt')) {
+        questionsList.add({'finished_attempt': answers['finished_attempt']});
+      } else {
+        questionsList.add({'finished_attempt': false});
+      }
+    }
+    else{
+      questionsList.add({'finished_attempt': false});
+    }
+
+    print("question list" + questionsList.toString());
+
     return questionsList;
   }
 
@@ -124,29 +167,87 @@ class StudentDB {
         .collection('question_papers')
         .document(questionPaperName)
         .collection('answers');
-      
-    QuerySnapshot students =  await studentAnswerCollection.getDocuments();
+
+    QuerySnapshot students = await studentAnswerCollection.getDocuments();
     bool exists = false;
     students.documents.forEach((element) {
-      if(element.documentID == user.uid)
-        exists = true;
-     });
+      if (element.documentID == user.uid) exists = true;
+    });
 
-    if(!exists){
-      studentAnswerCollection.document(user.uid).setData({}).then((value) => null).catchError((e){
-        print("Error creating a new doc $e");
-      });
+    if (!exists) {
+      studentAnswerCollection
+          .document(user.uid)
+          .setData({})
+          .then((value) => null)
+          .catchError((e) {
+            print("Error creating a new doc $e");
+          });
     }
 
-    studentAnswerCollection.document(user.uid)
+    studentAnswerCollection
+        .document(user.uid)
         .updateData({
           questionNumber: {text: double.parse(marks), 'submitted': true},
           'total_marks': FieldValue.increment(double.parse(marks)),
-          'finished_attempt' : false
+          'finished_attempt': false
         })
         .then((value) => print("added answer to db"))
         .catchError((e) {
           print("Error on adding answer to db $e");
+        });
+  }
+
+  Future<void> finishAttempt(
+      String uid, String subjectName, String questionPaperName) async {
+    FirebaseUser user;
+    await FirebaseAuth.instance.currentUser().then((value) => user = value);
+    CollectionReference studentAnswerCollection = Firestore.instance
+        .collection('users')
+        .document(uid)
+        .collection('subjects')
+        .document(subjectName)
+        .collection('question_papers')
+        .document(questionPaperName)
+        .collection('answers');
+
+    QuerySnapshot students = await studentAnswerCollection.getDocuments();
+    bool exists = false;
+    students.documents.forEach((element) {
+      if (element.documentID == user.uid) exists = true;
+    });
+
+    if (!exists) {
+      studentAnswerCollection
+          .document(user.uid)
+          .setData({})
+          .then((value) => null)
+          .catchError((e) {
+            print("Error creating a new doc $e");
+          });
+    }
+
+    studentAnswerCollection
+        .document(user.uid)
+        .updateData({'finished_attempt': true})
+        .then((value) => print("finished attempt"))
+        .catchError((e) {
+          print("Error finishing attempt $e");
+        });
+
+    CollectionReference attemptedPapers = Firestore.instance
+        .collection('users')
+        .document(user.uid)
+        .collection('attempted_papers');
+
+    attemptedPapers
+        .document('$subjectName $questionPaperName')
+        .setData({
+          'path':
+              '/users/$uid/subjects/$subjectName/question_papers/$questionPaperName'
+        })
+        .then((value) => print("added path to attempted papers"))
+        .catchError((e) {
+          print("error adding path to attempted papers $e");
         });
   }
 }

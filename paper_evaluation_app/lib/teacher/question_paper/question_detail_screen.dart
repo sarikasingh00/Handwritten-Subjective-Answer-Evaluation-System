@@ -42,8 +42,15 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                       // onSubmitted: (_) => __submitData(),
                     ),
                     RaisedButton(
-                        onPressed: () {
-                          TeacherDB().addQuestionText(widget.subjectName, widget.questionPaperName, widget.questionNumber, questionController.text, context, scaffoldKey);
+                        onPressed: () async{
+                          await TeacherDB().addQuestionText(
+                              widget.subjectName,
+                              widget.questionPaperName,
+                              widget.questionNumber,
+                              questionController.text,
+                              context,
+                              scaffoldKey);
+                          scaffoldKey.currentState.setState((){});
                         },
                         child: Text(
                           'Add Question',
@@ -89,9 +96,18 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                       // onSubmitted: (_) => __submitData(),
                     ),
                     RaisedButton(
-                        onPressed: () {
-                          TeacherDB().addKeyPhrase(widget.subjectName, widget.questionPaperName, widget.questionNumber, keyphraseController.text, double.parse(keyphraseMarksController.text) ,context, scaffoldKey);
+                        onPressed: () async {
+                          await TeacherDB().addKeyPhrase(
+                              widget.subjectName,
+                              widget.questionPaperName,
+                              widget.questionNumber,
+                              keyphraseController.text,
+                              double.parse(keyphraseMarksController.text),
+                              context,
+                              scaffoldKey);
+                          scaffoldKey.currentState.setState((){});
                         },
+
                         child: Text(
                           'Add Keyphrase',
                         ),
@@ -107,75 +123,83 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
         });
   }
 
-
-
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: Color(0xFF6F35A5),
-          title: Text(widget.questionPaperName),
-        ),
-        floatingActionButton: SpeedDial(
-            marginEnd: 18,
-            marginBottom: 20,
-            icon: Icons.add,
-            activeIcon: Icons.remove,
-            visible: true,
+    return FutureBuilder(
+        future: TeacherDB().getQuestionContent(widget.subjectName,
+            widget.questionPaperName, widget.questionNumber),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasData) {
+            Map<String, dynamic> questionContent = snapshot.data;
+            return Scaffold(
+                key: _scaffoldKey,
+                appBar: AppBar(
+                  backgroundColor: Color(0xFF6F35A5),
+                  title: Text(widget.questionPaperName),
+                ),
+                floatingActionButton: SpeedDial(
+                    marginEnd: 18,
+                    marginBottom: 20,
+                    icon: Icons.add,
+                    activeIcon: Icons.remove,
+                    visible: true,
 
-            /// If true user is forced to close dial manually
-            /// by tapping main button and overlay is not rendered.
-            closeManually: false,
+                    /// If true user is forced to close dial manually
+                    /// by tapping main button and overlay is not rendered.
+                    closeManually: false,
 
-            /// If true overlay will render no matter what.
-            renderOverlay: false,
-            curve: Curves.bounceIn,
-            overlayColor: Colors.black,
-            overlayOpacity: 0.5,
-            onOpen: () => print('OPENING DIAL'),
-            onClose: () => print('DIAL CLOSED'),
-            tooltip: 'Speed Dial',
-            heroTag: 'speed-dial-hero-tag',
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.black,
-            elevation: 8.0,
-            shape: CircleBorder(),
-            children: [
-              SpeedDialChild(
-                labelBackgroundColor: Colors.white,
-                child: Icon(Icons.question_answer),
-                backgroundColor: Colors.greenAccent,
-                label: 'Add Key Phrase',
-                // labelStyle: TextStyle(fontSize: 18.0,),
-                onTap: () => _startAddKeyPhrase(context, _scaffoldKey),
-                    // print('FIRST CHILD'), //change to add phrase modal function
-                onLongPress: () => print('FIRST CHILD LONG PRESS'),
-              ),
-              SpeedDialChild(
-                labelBackgroundColor: Colors.white,
-                child: Icon(Icons.question_answer),
-                backgroundColor: Colors.red,
-                label: 'Add/Edit Question',
-                // labelStyle: TextStyle(fontSize: 18.0),
-                onTap: () => _startAddQuestionText(context, _scaffoldKey),
-                onLongPress: () => print('Second CHILD LONG PRESS'),
-              ),
-            ]),
-        body: Container(
-            // height: MediaQuery.of(context).size.height*0.8,
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Question text for ${widget.questionNumber}'),
-            Text('Total marks'),
-            Text('List of answers'),
-            Text('modal to question'),
-            Text('modal to add a new keyphrase')
-          ],
-        )));
+                    /// If true overlay will render no matter what.
+                    renderOverlay: false,
+                    curve: Curves.bounceIn,
+                    overlayColor: Colors.black,
+                    overlayOpacity: 0.5,
+                    onOpen: () => print('OPENING DIAL'),
+                    onClose: () => print('DIAL CLOSED'),
+                    tooltip: 'Speed Dial',
+                    heroTag: 'speed-dial-hero-tag',
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.black,
+                    elevation: 8.0,
+                    shape: CircleBorder(),
+                    children: [
+                      SpeedDialChild(
+                        labelBackgroundColor: Colors.white,
+                        child: Icon(Icons.question_answer),
+                        backgroundColor: Colors.greenAccent,
+                        label: 'Add Key Phrase',
+                        // labelStyle: TextStyle(fontSize: 18.0,),
+                        onTap: () => _startAddKeyPhrase(context, _scaffoldKey),
+                        // print('FIRST CHILD'), //change to add phrase modal function
+                        onLongPress: () => print('FIRST CHILD LONG PRESS'),
+                      ),
+                      SpeedDialChild(
+                        labelBackgroundColor: Colors.white,
+                        child: Icon(Icons.question_answer),
+                        backgroundColor: Colors.red,
+                        label: 'Add/Edit Question',
+                        // labelStyle: TextStyle(fontSize: 18.0),
+                        onTap: () =>
+                            _startAddQuestionText(context, _scaffoldKey),
+                        onLongPress: () => print('Second CHILD LONG PRESS'),
+                      ),
+                    ]),
+                body: Container(
+                    // height: MediaQuery.of(context).size.height*0.8,
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Text('Question text for ${widget.questionNumber}'),
+                    questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
+                    questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
+                    questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
+                  ],
+                )));
+          }
+        });
   }
 }

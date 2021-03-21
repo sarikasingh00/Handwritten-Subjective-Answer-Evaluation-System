@@ -128,7 +128,7 @@ class StudentDB {
       if (answers != null) {
         if (answers.containsKey(element.documentID)) {
           questionsList.add(
-              {element.documentID: answers[element.documentID]['submitted']});
+              {element.documentID: true});
           print(element.documentID);
         } else {
           questionsList.add({element.documentID: false});

@@ -36,6 +36,7 @@ class AttemptedPapersScreen extends StatelessWidget {
             Map<String, dynamic> questionList = snapshot.data;
             var keysList = questionList.keys.toList();
             print(keysList);
+            print(questionList);
             return Column(
               children: [
                 Container(

@@ -45,6 +45,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Student Dashboard"),
+          backgroundColor: Color(0xFF6F35A5),
           actions: [
             FlatButton(
                 onPressed: () {
@@ -73,8 +74,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       //height: MediaQuery.of(context).size.height * 0.8,
                       child: Column(
                         children: [
-                          Text(questionText['question']),
-                          Text(questionText['total_marks'].toString()),
+                          questionText.containsKey('question')?Text(questionText['question']): Text('No question text added yet, please contact your Teacher'),
+                          questionText.containsKey('question') ? Text(questionText['total_marks'].toString()):  Text(''),
                         ],
                       ),
                     ),

@@ -214,8 +214,10 @@ class TeacherDB {
       print(documentData);
       Map<dynamic, dynamic> answerMap = documentData['answer'];
       answerMap["\"$keyPhrase\""] = marks;
-      await currQuestionDocument
-          .updateData({'answer': answerMap, 'total_marks': FieldValue.increment(marks)}).then((value) {
+      await currQuestionDocument.updateData({
+        'answer': answerMap,
+        'total_marks': FieldValue.increment(marks)
+      }).then((value) {
         print("Keyphrase added successfully in existing case");
         Navigator.of(context).pop();
         scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -227,10 +229,11 @@ class TeacherDB {
           content: Text("Error Adding Key Phrase"),
         ));
       });
-    } 
-    else {
-      await currQuestionDocument
-          .updateData({'answer': {"\"$keyPhrase\"":marks}, 'total_marks':marks}).then((value) {
+    } else {
+      await currQuestionDocument.updateData({
+        'answer': {"\"$keyPhrase\"": marks},
+        'total_marks': marks
+      }).then((value) {
         print("Keyphrase added successfully in non existing case");
         Navigator.of(context).pop();
         scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -256,5 +259,30 @@ class TeacherDB {
     //     content: Text("Error Adding Question Text"),
     //   ));
     // });
+  }
+
+  Future<Map<String, dynamic>> getQuestionContent(String subjectName,
+      String questionPaperName, String questionNumber) async {
+    FirebaseUser user;
+    await FirebaseAuth.instance.currentUser().then((value) => user = value);
+    DocumentReference currQuestionDocument = Firestore.instance
+        .collection('users')
+        .document(user.uid.toString())
+        .collection('subjects')
+        .document(subjectName)
+        .collection('question_papers')
+        .document(questionPaperName)
+        .collection('questions')
+        .document(questionNumber);
+
+    Map<String, dynamic> questionContent;
+    await currQuestionDocument
+        .get()
+        .then((value) => questionContent = value.data)
+        .catchError((e) {
+      print("Error getting que content $e");
+    });
+    print(questionContent);
+    return questionContent;
   }
 }

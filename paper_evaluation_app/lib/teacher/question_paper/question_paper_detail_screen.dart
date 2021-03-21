@@ -5,14 +5,14 @@ import './new_question.dart';
 import '../question_paper/question_paper_list.dart';
 
 class QuestionPaperDetailScreen extends StatefulWidget {
-
   final String subjectName;
   final String questionPaperName;
 
   QuestionPaperDetailScreen(this.questionPaperName, this.subjectName);
 
   @override
-  _QuestionPaperDetailScreenState createState() => _QuestionPaperDetailScreenState();
+  _QuestionPaperDetailScreenState createState() =>
+      _QuestionPaperDetailScreenState();
 }
 
 class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
@@ -24,9 +24,11 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
       backgroundColor: Color(0xFF6F35A5),
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(widget.questionPaperName,),
-        backgroundColor: Color(0xFF6F35A5),
+        title: Text(
+          widget.questionPaperName,
         ),
+        backgroundColor: Color(0xFF6F35A5),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -44,18 +46,21 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
               ],
             ),
             Container(
-              height: MediaQuery.of(context).size.height-130, 
+              height: MediaQuery.of(context).size.height - 130,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(60),
+                      topLeft: Radius.circular(60)),
+                  color: Colors.white),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Builder(
-                    builder: (context){ 
-                      columnContext = context;
-                      return QuestionListView(widget.subjectName,widget.questionPaperName);
-                    }
-                  ),
+                  Builder(builder: (context) {
+                    columnContext = context;
+                    return QuestionListView(
+                        widget.subjectName, widget.questionPaperName);
+                  }),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
@@ -70,10 +75,24 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
                             child: Text('Add Question'),
                             shape: RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(30.0)),
-                            onPressed: () {
-                              TeacherDB().addQuestion(widget.subjectName, widget.questionPaperName, context, _scaffoldKey);
-                                setState(() { 
+                            onPressed: () async {
+                              await TeacherDB().addQuestion(
+                                  widget.subjectName,
+                                  widget.questionPaperName,
+                                  context,
+                                  _scaffoldKey);
+                              setState(() {
+                                
                               });
+                              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('New Question Added'),));
+                              //  _scaffoldKey.currentState.build(context);
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           QuestionPaperDetailScreen(widget.subjectName,widget.questionPaperName)),
+                              // );
+                              // Scaffold.of(context).setState(() {});
                             },
                           ),
                         ),
@@ -82,7 +101,7 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
                   )
                 ],
               ),
-            ), 
+            ),
           ],
         ),
       ),

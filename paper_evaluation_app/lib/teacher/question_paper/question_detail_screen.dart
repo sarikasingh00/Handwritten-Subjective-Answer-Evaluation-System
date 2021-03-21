@@ -75,6 +75,7 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                     right: 10,
                     bottom: MediaQuery.of(context).viewInsets.bottom + 10),
                 child: Column(
+                  
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     TextField(

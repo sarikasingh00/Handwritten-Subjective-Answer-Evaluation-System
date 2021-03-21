@@ -36,6 +36,7 @@ class AttemptedPapersScreen extends StatelessWidget {
             Map<String, dynamic> questionList = snapshot.data;
             var keysList = questionList.keys.toList();
             print(keysList);
+            print(questionList);
             return Column(
               children: [
                 Container(
@@ -54,7 +55,7 @@ class AttemptedPapersScreen extends StatelessWidget {
                                     title: Text(
                                         '${questionList.keys.elementAt(index)}'),
                                     trailing: Text(
-                                        '${questionList[keysList[index]].values.elementAt(1)}'),
+                                        '${questionList[keysList[index]].values.elementAt(0)}'),
                                     onTap: () {
                                       Navigator.push(
                                           context,
@@ -64,11 +65,11 @@ class AttemptedPapersScreen extends StatelessWidget {
                                                       questionList[
                                                               keysList[index]]
                                                           .keys
-                                                          .elementAt(1),
+                                                          .elementAt(0),
                                                       questionList[
                                                               keysList[index]]
                                                           .values
-                                                          .elementAt(1).toString())));
+                                                          .elementAt(0).toString())));
                                     }),
                               );
                       }),

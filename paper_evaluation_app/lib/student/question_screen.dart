@@ -114,9 +114,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                         .then((value) {
                                       print("hello $value");
                                       setState(() {
-                                        _text = value;
-                                        print("in widget tree $_text");
+                                        // _text = value;
+                                        print(value);
                                       });
+                                      StudentDB().addAnswer(widget.teacherUid, widget.subjectName, widget.questionPaperName, widget.questionNumber, value['text'], value['marks']);
                                     });
                                   } else {
                                     print("Error");

@@ -30,8 +30,9 @@ def home():
         buffer = io.BytesIO()
         received_image.save(buffer, format='JPEG')
         byte_image = buffer.getvalue()
+        text = text_recognition.recognize(byte_image, model_answer_map)
         # print(type(byte_im))
-        return jsonify({'text': sim.evaluate(text_recognition.recognize(byte_image, model_answer_map),model_answer_map)}) 
+        return jsonify({'marks': sim.evaluate(text,model_answer_map), 'text': text}) 
 
 # app.run()
 

@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class SendImage {
-  Future<String> getExtractedText(File imageFile, String modelAnswer) async {
+  Future<Map<dynamic,dynamic>> getExtractedText(File imageFile, String modelAnswer) async {
     String text = "";
     // open a bytestream
     var stream =
@@ -14,8 +14,8 @@ class SendImage {
     var length = await imageFile.length();
 
     // string to uri
+    // var uri = Uri.parse("http://192.168.1.14:5000/");
     var uri = Uri.parse("http://192.168.0.108:5000/");
-    // var uri = Uri.parse("http://192.168.43.105:5000/");
 
     // create multipart request
     var request = new http.MultipartRequest("POST", uri);
@@ -40,6 +40,6 @@ class SendImage {
     text = jsonDecode(body.body)["text"];
     print("in send image.dart 2 $text");
     
-    return text;
+    return jsonDecode(body.body);
   }
 }

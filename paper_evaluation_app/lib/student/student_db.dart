@@ -24,6 +24,24 @@ class StudentDB {
     return teacherList;
   }
 
+  Future<List<Map<String, String>>> getAttemptedPapers() async {
+    FirebaseUser user;
+    await FirebaseAuth.instance.currentUser().then((value) => user = value);
+    CollectionReference questionCollection = Firestore.instance
+        .collection('users')
+        .document(user.uid)
+        .collection('attempted_papers');
+    QuerySnapshot attemptedPapers = await questionCollection.getDocuments();
+    List<Map<String, String>> attemptedPapersLists = [];
+    attemptedPapers.documents.forEach((element) {
+      attemptedPapersLists
+          .add({'name': element.documentID, 'path': element['path']});
+      print(element.documentID);
+      print(element['path']);
+    });
+    return attemptedPapersLists;
+  }
+
   Future<List<String>> getSubjects(String uid) async {
     // FirebaseUser user;
     // await FirebaseAuth.instance.currentUser().then((value) => user = value);
@@ -57,6 +75,22 @@ class StudentDB {
       print(element.documentID);
     });
     return questionPapersList;
+  }
+
+  Future<Map<String, dynamic>> getAttemptedPaperQuestions(String path) async {
+    FirebaseUser user;
+    await FirebaseAuth.instance.currentUser().then((value) => user = value);
+    DocumentReference answerDocument =
+        Firestore.instance.document(path + '/answers/${user.uid}');
+    Map<String, dynamic> questionsLists;
+
+    await answerDocument.get().then((doc) {
+      questionsLists = doc.data;
+    });
+
+
+    print(questionsLists);
+    return questionsLists;
   }
 
   Future<List<Map<String, bool>>> getQuestions(
@@ -113,8 +147,7 @@ class StudentDB {
       } else {
         questionsList.add({'finished_attempt': false});
       }
-    }
-    else{
+    } else {
       questionsList.add({'finished_attempt': false});
     }
 

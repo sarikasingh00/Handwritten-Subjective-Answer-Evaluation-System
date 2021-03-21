@@ -33,7 +33,6 @@ class _SubjectListViewState extends State<SubjectListView> {
           } else if (snapshot.hasData) {
             List<String> subjectList = snapshot.data;
             return Container(
-              // margin: EdgeInsets.only(top:60),
               decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
               height: MediaQuery.of(context).size.height-235,
               child: Padding(

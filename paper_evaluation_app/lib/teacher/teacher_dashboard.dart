@@ -117,9 +117,6 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                 )
               ],
             ),
-            // Container(
-            //   child: Text("Teacher Dashboard"),
-            // ),
             Container(
               height: MediaQuery.of(context).size.height-130, 
               width: MediaQuery.of(context).size.width,
@@ -153,9 +150,6 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                 ],
               ),
             ),
-            // SubjectListView(),
-            // List view of subjects under teacher
-            
           ],
         ),
       ),

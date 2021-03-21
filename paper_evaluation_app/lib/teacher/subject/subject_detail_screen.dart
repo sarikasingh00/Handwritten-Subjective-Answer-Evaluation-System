@@ -31,44 +31,66 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF6F35A5),
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(widget.subjectName),
         backgroundColor: Color(0xFF6F35A5),
         ),
-      body: Container(
-        // height: MediaQuery.of(context).size.height*0.8,
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Container(
-            //   child: Text("Teacher Dashboard"),
-            // ),
-            Builder(
-              builder: (context){ 
-                columnContext = context;
-                return QuestionPaperListView(widget.subjectName);
-                }
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 20,
+                )
+              ],
             ),
-            // List view of subjects under teacher
-            ButtonTheme(
-              minWidth: 300.0,
-              height: 50.0,
-              
-              child:Container(
-                margin: const EdgeInsets.only(left: 15.0,top: 10.0),
-                child: RaisedButton(
-                color: Color(0xFF6F35A5),
-                textColor: Colors.white,
-                child: Text('Add Question Paper'),
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                onPressed: () {
-                _startAddNewQuestionPaper(columnContext, _scaffoldKey);
-              }
+            Container(
+              height: MediaQuery.of(context).size.height-130, 
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Builder(
+                    builder: (context){ 
+                      columnContext = context;
+                      return QuestionPaperListView(widget.subjectName);
+                      }
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      child: ButtonTheme(
+                        minWidth: 300.0,
+                        height: 50.0,
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 15.0),
+                          child: RaisedButton(
+                            color: Color(0xFF6F35A5),
+                            textColor: Colors.white,
+                            child: Text('Add Question Paper'),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            onPressed: () {
+                              _startAddNewQuestionPaper(columnContext, _scaffoldKey);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-              )
-            )
           ],
         ),
       ),

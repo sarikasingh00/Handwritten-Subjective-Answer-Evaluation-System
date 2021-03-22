@@ -67,23 +67,31 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.width * 0.128,
                 child: Container(
                   decoration: ShapeDecoration(
                     color: Color(0xFFF1E6FF),
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                      // side: BorderSide(width: 0, style: BorderStyle.solid),
                       borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     ),
                   ),
                   child: new DropdownButton<String>(
                     isExpanded: true,
-                    hint: Text("Role"),
+                    hint: Row(
+                      children: [
+                        SizedBox(width: 20,),
+                        Icon(Icons.person_pin_circle_outlined, color: Colors.deepPurple,),
+                        SizedBox(width: 20,),
+                        Text("Role",textAlign: TextAlign.end,),
+                      ],
+                    ),
                     value: _role,
                     items: <String>['Teacher', 'Student'].map((String value) {
                       return new DropdownMenuItem<String>(
                         value: value,
-                        child: new Text(value),
+                        child: new Text(value,),
                       );
                     }).toList(),
                     onChanged: (value) {

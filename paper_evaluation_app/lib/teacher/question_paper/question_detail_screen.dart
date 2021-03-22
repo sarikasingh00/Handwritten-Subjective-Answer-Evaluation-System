@@ -142,28 +142,141 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                   backgroundColor: Color(0xFF6F35A5),
                   title: Text(widget.questionPaperName),
                 ),
-              body:Padding(
-                padding: const EdgeInsets.only(top:60.0),
-                child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(top:50.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                
+              // body:Padding(
+              //   padding: const EdgeInsets.only(top:60.0),
+              //   child: Container(
+              //   decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+              //   height: MediaQuery.of(context).size.height,
+              //   width: MediaQuery.of(context).size.width,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(top:50.0),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
 
-                    children: [
+              //       children: [
                       
-                      // Text('Question text for ${widget.questionNumber}'),
-                      questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
-                      questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
-                      questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
+              //         // Text('Question text for ${widget.questionNumber}'),
+              //         questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
+              //         questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
+              //         questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
                       
+              //       ],
+              //     ))
+              //   ),
+              // ),
+              body:Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top:18.0),
+                        child: SizedBox(
+                          height: 30,
+                          
+                          child: questionContent.containsKey('question') ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              
+                              Text(questionContent['question'],style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold,),),
+                              SizedBox(width:15),
+                              Text(questionContent['total_marks'].toString(),style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold),),
+                            ],
+                          ) : Text('Add a question please',style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
                     ],
-                  ))
+                  ),
+                
+                  // Container(
+                  //   decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                  //   height: MediaQuery.of(context).size.height-150,
+                  //   padding: const EdgeInsets.only(top:50.0),
+                  //   child: ListView.builder(
+                  //         itemCount: questionContent.length,
+                  //         padding: EdgeInsets.only(top:0),
+                  //         itemBuilder: (context, index) {
+                  //           return Container(
+                  //             // elevation: 5,
+                  //             child: Container(
+                  //               height: 80,
+                  //               child: Container(
+                  //                 child: ListTile(
+                  //                   leading: const Icon(Icons.assignment),
+                  //                   tileColor: Colors.white,
+                  //                   title: Text('${questionContent[index]}'),
+                  //                   onTap: () {
+                  //                     Navigator.push(
+                  //                       context,
+                  //                       MaterialPageRoute(
+                  //                           builder: (context) =>
+                  //                           questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
+                  //                               // QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
+                  //                     ),
+                  //                     );
+                  //                   },
+                  //                 ),
+                                  
+                  //               ),
+                  //             ),
+                  //           );
+                  //         }),
+                  //   ),
+                  
+                Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                height: MediaQuery.of(context).size.height-145,
+                width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    itemCount: questionContent.length,
+                    padding: EdgeInsets.only(top:0),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        // elevation: 5,
+                        child: Container(
+                          height: 80,
+                          child: Container(
+                            padding: const EdgeInsets.only(top:50.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.chevron_right),
+                              tileColor: Colors.white,
+                              title: Text('${questionContent['answer'].keys.elementAt(index)}'),
+							                trailing : Text('${questionContent['answer'][questionContent['answer'].keys.elementAt(index)]}'),
+                              onTap: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
+                                // );
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  // child: Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+
+                  //   children: [
+                      
+                  //     // Text('Question text for ${widget.questionNumber}'),
+                  //     //questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
+                  //     questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
+                  //     questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
+                      
+                  //   ],
+                  // )
                 ),
+              
+                ],
               ),
                 floatingActionButton: SpeedDial(
                     marginEnd: 18,
@@ -185,8 +298,8 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                     onClose: () => print('DIAL CLOSED'),
                     tooltip: 'Speed Dial',
                     heroTag: 'speed-dial-hero-tag',
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.black,
+                    backgroundColor: Color(0xFF6F35A5),
+                    foregroundColor: Colors.white,
                     elevation: 8.0,
                     shape: CircleBorder(),
                     children: [
@@ -211,18 +324,6 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                         onLongPress: () => print('Second CHILD LONG PRESS'),
                       ),
                     ]),
-                // body: Container(
-                //     // height: MediaQuery.of(context).size.height*0.8,
-                //     child: Column(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     // Text('Question text for ${widget.questionNumber}'),
-                //     questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
-                //     questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
-                //     questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
-                //   ],
-                // )));
     );
           }
         });

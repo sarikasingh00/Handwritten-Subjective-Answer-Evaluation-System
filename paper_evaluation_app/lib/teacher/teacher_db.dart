@@ -325,6 +325,8 @@ class TeacherDB {
 
     List<List<dynamic>> csvData = [
       ['Name', 'Marks'],
+      // ['Yash', 20],
+      // ['Sarika', 16],
       // data
       
     ];
@@ -335,9 +337,9 @@ class TeacherDB {
 
     String csv = const ListToCsvConverter().convert(csvData);
 
-    final String dir = (await getApplicationDocumentsDirectory()).path;
-    final String path = '$dir/marks.csv';
-
+    final String dir = (await getExternalStorageDirectory()).path;
+    final String path = '$dir/$subjectName-$questionPaperName.csv';
+    print(path);
     // create file
     final File file = File(path);
     // Save csv string using default configuration

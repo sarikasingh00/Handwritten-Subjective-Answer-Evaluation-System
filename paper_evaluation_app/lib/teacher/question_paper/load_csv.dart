@@ -11,7 +11,7 @@ class LoadAndViewCsvPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Load and View Csv data'),
+        title: Text('Excel Data'),
       ),
       body: FutureBuilder(
         future: _loadCsvData(),

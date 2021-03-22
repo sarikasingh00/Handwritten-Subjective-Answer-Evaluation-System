@@ -20,7 +20,7 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF6F35A5),
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Student Dashboard"),

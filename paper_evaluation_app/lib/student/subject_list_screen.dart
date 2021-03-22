@@ -12,7 +12,7 @@ class SubjectListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF6F35A5),
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Student Dashboard"),
@@ -35,27 +35,60 @@ class SubjectListScreen extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
                 List<String> subjectList = snapshot.data;
+                // return Container(
+                //   height: MediaQuery.of(context).size.height * 0.8,
+                //   child: ListView.builder(
+                //       itemCount: subjectList.length,
+                //       itemBuilder: (context, index) {
+                //         return Card(
+                //           elevation: 5,
+                //           child: ListTile(
+                //             title: Text('${subjectList[index]}'),
+                //             onTap: () {
+                //               Navigator.push(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                     builder: (context) =>
+                //                         QuestionPaperListScreen(teacherUid,subjectList[index])),
+                //               );
+                //             },
+                //           ),
+                //         );
+                //       }),
+                // );
                 return Container(
-                  height: MediaQuery.of(context).size.height * 0.8,
+                decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                height: MediaQuery.of(context).size.height-200,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:50.0),
                   child: ListView.builder(
                       itemCount: subjectList.length,
+                      padding: EdgeInsets.only(top:0),
                       itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 5,
-                          child: ListTile(
-                            title: Text('${subjectList[index]}'),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
+                        return Container(
+                          // elevation: 5,
+                          child: Container(
+                            height: 80,
+                            child: Container(
+                              child: ListTile(
+                                leading: const Icon(Icons.auto_stories),
+                                tileColor: Colors.white,
+                                title: Text('${subjectList[index]}'),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
                                         QuestionPaperListScreen(teacherUid,subjectList[index])),
-                              );
-                            },
+                                  );
+                                },
+                              ),  
+                            ),
                           ),
                         );
                       }),
-                );
+                ),
+              );
               } else
                 return Container();
             }));

@@ -14,26 +14,59 @@ class AttemptedPapersListView extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
             List<Map<String,String>> attemptedPapersLists = snapshot.data;
+            // return Container(
+            //   height: MediaQuery.of(context).size.height * 0.8,
+            //   child: ListView.builder(
+            //       itemCount: attemptedPapersLists.length,
+            //       itemBuilder: (context, index) {
+            //         return Card(
+            //           elevation: 5,
+            //           child: ListTile(
+            //             title: Text('${attemptedPapersLists[index]['name']}'),
+            //             onTap: () {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (context) => AttemptedPapersScreen(
+            //                         attemptedPapersLists[index]['path'])),
+            //               );
+            //             },
+            //           ),
+            //         );
+            //       }),
+            // );
             return Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: ListView.builder(
-                  itemCount: attemptedPapersLists.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 5,
-                      child: ListTile(
-                        title: Text('${attemptedPapersLists[index]['name']}'),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AttemptedPapersScreen(
-                                    attemptedPapersLists[index]['path'])),
-                          );
-                        },
-                      ),
-                    );
-                  }),
+              decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+              height: MediaQuery.of(context).size.height-235,
+              child: Padding(
+                padding: const EdgeInsets.only(top:50.0),
+                child: ListView.builder(
+                    itemCount: attemptedPapersLists.length,
+                    padding: EdgeInsets.only(top:0),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        // elevation: 5,
+                        child: Container(
+                          height: 80,
+                          child: Container(
+                            child: ListTile(
+                              leading: const Icon(Icons.auto_stories),
+                              tileColor: Colors.white,
+                              title: Text('${attemptedPapersLists[index]['name']}'),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      AttemptedPapersScreen(attemptedPapersLists[index]['path'])),
+                                );
+                              },
+                            ),  
+                          ),
+                        ),
+                      );
+                    }),
+              ),
             );
           } else
             return Container();

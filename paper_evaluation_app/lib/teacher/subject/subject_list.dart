@@ -39,7 +39,7 @@ class _SubjectListViewState extends State<SubjectListView> {
                 padding: const EdgeInsets.only(top:50.0),
                 child: ListView.builder(
                     itemCount: subjectList.length,
-                    padding: EdgeInsets.only(top:60),
+                    padding: EdgeInsets.only(top:0),
                     itemBuilder: (context, index) {
                       return Container(
                         // elevation: 5,
@@ -47,7 +47,7 @@ class _SubjectListViewState extends State<SubjectListView> {
                           height: 80,
                           child: Container(
                             child: ListTile(
-                              leading: const Icon(Icons.assignment),
+                              leading: const Icon(Icons.auto_stories),
                               tileColor: Colors.white,
                               title: Text('${subjectList[index]}'),
                               onTap: () {

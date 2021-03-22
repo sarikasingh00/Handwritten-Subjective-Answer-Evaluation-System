@@ -21,9 +21,10 @@ class _StudentDashboardState extends State<StudentDashboard> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF6F35A5),
         key: _scaffoldKey,
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
           title: Text('Student Dashboard'),
           bottom: TabBar(
             indicatorColor: Colors.yellow,
@@ -49,12 +50,42 @@ class _StudentDashboardState extends State<StudentDashboard> {
                 )),
           ],
         ),
-        body: TabBarView(
-          children: <Widget>[
-            TeacherListView(),
-            AttemptedPapersListView(),
+        // body: TabBarView(
+        //   children: <Widget>[
+        //     TeacherListView(),
+        //     AttemptedPapersListView(),
+        //   ],
+        // ),
+        body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height-130, 
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+              child: TabBarView(
+                children: <Widget>[
+                TeacherListView(),
+                AttemptedPapersListView(),
+                ],
+              ),
+              ),
           ],
         ),
+      ),
       ),
     );
   }

@@ -33,7 +33,7 @@ class _QuestionListViewState extends State<QuestionListView> {
                   padding: const EdgeInsets.only(top:50.0),
                   child: ListView.builder(
                       itemCount: questionList.length,
-                      padding: EdgeInsets.only(top:60),
+                      padding: EdgeInsets.only(top:0),
                       itemBuilder: (context, index) {
                         return Container(
                           // elevation: 5,

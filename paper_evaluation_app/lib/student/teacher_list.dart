@@ -18,26 +18,59 @@ class _TeacherListViewState extends State<TeacherListView> {
             return Center(child : CircularProgressIndicator());
           } else if (snapshot.hasData) {
             List<Map<String,String>> teacherList = snapshot.data;
+            // return Container(
+            //   height: MediaQuery.of(context).size.height * 0.8,
+            //   child: ListView.builder(
+            //       itemCount: teacherList.length,
+            //       itemBuilder: (context, index) {
+            //         return Card(
+            //           elevation: 5,
+            //           child: ListTile(
+            //             title: Text('${teacherList[index]['name']}'),
+            //             onTap: () {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (context) =>
+            //                         SubjectListScreen(teacherList[index]['uid'])),
+            //               );
+            //             },
+            //           ),
+            //         );
+            //       }),
+            // );
             return Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: ListView.builder(
-                  itemCount: teacherList.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 5,
-                      child: ListTile(
-                        title: Text('${teacherList[index]['name']}'),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SubjectListScreen(teacherList[index]['uid'])),
-                          );
-                        },
-                      ),
-                    );
-                  }),
+              decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+              height: MediaQuery.of(context).size.height-235,
+              child: Padding(
+                padding: const EdgeInsets.only(top:50.0),
+                child: ListView.builder(
+                    itemCount: teacherList.length,
+                    padding: EdgeInsets.only(top:0),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        // elevation: 5,
+                        child: Container(
+                          height: 80,
+                          child: Container(
+                            child: ListTile(
+                              leading: const Icon(Icons.person),
+                              tileColor: Colors.white,
+                              title: Text('${teacherList[index]['name']}'),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      SubjectListScreen(teacherList[index]['uid'])),
+                                );
+                              },
+                            ),  
+                          ),
+                        ),
+                      );
+                    }),
+              ),
             );
           } else
             return Container();

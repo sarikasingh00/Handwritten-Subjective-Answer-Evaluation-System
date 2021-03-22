@@ -63,8 +63,8 @@ class _NewQuestionPaperState extends State<NewQuestionPaper> {
                   child: Text(
                     'Add Question Paper',
                   ),
-                  color: Theme.of(context).buttonColor,
-                  textColor: Theme.of(context).textTheme.button.color),
+                  color: Color(0xFF6F35A5),
+                  textColor: Colors.white),
             ],
           ),
         ),

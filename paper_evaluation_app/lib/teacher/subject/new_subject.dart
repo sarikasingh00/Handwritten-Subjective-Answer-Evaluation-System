@@ -48,8 +48,8 @@ class _NewSubjectState extends State<NewSubject> {
                   child: Text(
                     'Add Subject',
                   ),
-                  color: Theme.of(context).buttonColor,
-                  textColor: Theme.of(context).textTheme.button.color),
+                  color: Color(0xFF6F35A5),
+                  textColor: Colors.white),
             ],
           ),
         ),

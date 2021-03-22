@@ -3,6 +3,7 @@ import 'package:paper_evaluation_app/teacher/teacher_db.dart';
 import './question_list_view.dart';
 import './new_question.dart';
 import '../question_paper/question_paper_list.dart';
+import 'load_csv.dart';
 
 class QuestionPaperDetailScreen extends StatefulWidget {
   final String subjectName;
@@ -17,6 +18,7 @@ class QuestionPaperDetailScreen extends StatefulWidget {
 
 class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   var columnContext;
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,19 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
         title: Text(
           widget.questionPaperName,
         ),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(
+                child: Text("Export as Excel"),
+                value: "Excel",
+              ),
+            ],
+            onSelected: (value) {
+                TeacherDB().exportExcel(context, widget.subjectName, widget.questionPaperName);           
+            },
+          ),
+        ],
         backgroundColor: Color(0xFF6F35A5),
       ),
       body: SingleChildScrollView(
@@ -81,10 +96,10 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
                                   widget.questionPaperName,
                                   context,
                                   _scaffoldKey);
-                              setState(() {
-                                
-                              });
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('New Question Added'),));
+                              setState(() {});
+                              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                content: Text('New Question Added'),
+                              ));
                               //  _scaffoldKey.currentState.build(context);
                               // Navigator.pushReplacement(
                               //   context,

@@ -1,10 +1,14 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:paper_evaluation_app/teacher/question_paper/load_csv.dart';
 import 'package:paper_evaluation_app/teacher/question_paper/question_list_view.dart';
 import 'package:paper_evaluation_app/teacher/question_paper/question_paper_detail_screen.dart';
 import '../authentication/user_management.dart';
 import 'package:flutter/material.dart';
+import 'package:csv/csv.dart';
+import 'package:path_provider/path_provider.dart';
 
 class TeacherDB {
   Future<void> addSubject(
@@ -285,4 +289,69 @@ class TeacherDB {
     print(questionContent);
     return questionContent;
   }
+
+
+  Future<void> exportExcel(context, String subjectName, String questionPaperName) async {
+    FirebaseUser user;
+    await FirebaseAuth.instance.currentUser().then((value) => user = value);
+    CollectionReference studentCollections = Firestore.instance
+        .collection('users')
+        .document(user.uid.toString())
+        .collection('subjects')
+        .document(subjectName)
+        .collection('question_papers')
+        .document(questionPaperName)
+        .collection('answers');
+
+    QuerySnapshot qs = await studentCollections.getDocuments();
+    List<String> studentList = [];
+    List<double> studentMarks = [];
+    qs.documents.forEach((element) {
+      studentList.add(element.documentID);
+      studentMarks.add(element.data['total_marks']);
+      print(element.documentID);
+    });
+
+    CollectionReference userCollections = Firestore.instance
+        .collection('users');
+    
+    QuerySnapshot qs1 = await userCollections.getDocuments();
+    List<String> studentNames = [];
+    qs1.documents.forEach((element) {
+      if (studentList.contains(element.documentID)) {
+        studentNames.add(element.data['name']);
+      }
+    });
+
+    List<List<dynamic>> csvData = [
+      ['Name', 'Marks'],
+      // data
+      
+    ];
+
+    for(int i=0; i<studentList.length; i++){
+      csvData.add([studentNames[i],studentMarks[i].toString()]);
+    }
+
+    String csv = const ListToCsvConverter().convert(csvData);
+
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final String path = '$dir/marks.csv';
+
+    // create file
+    final File file = File(path);
+    // Save csv string using default configuration
+    // , as field separator
+    // " as text delimiter and
+    // \r\n as eol.
+    await file.writeAsString(csv);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => LoadAndViewCsvPage(path: path),
+      ),
+    );
+  }
+
 }
+

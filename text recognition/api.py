@@ -39,4 +39,4 @@ def home():
 if __name__ == '__main__':
     sim = similarity.SimilarityModule()
     # app.debug = True
-    app.run(host = '192.168.0.108',port=5000, use_reloader=False)
+    app.run(host = '192.168.0.102',port=5000, use_reloader=False)

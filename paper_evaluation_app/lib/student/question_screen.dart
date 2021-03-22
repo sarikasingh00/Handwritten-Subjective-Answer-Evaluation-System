@@ -114,7 +114,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                         .then((value) {
                                       print("hello $value");
                                       setState(() {
-                                        // _text = value;
+                                        _text = "Answer recordded!";
+                                        _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Answer recorded'),));
                                         print(value);
                                       });
                                       StudentDB().addAnswer(widget.teacherUid, widget.subjectName, widget.questionPaperName, widget.questionNumber, value['text'], value['marks']);
@@ -123,7 +124,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                     print("Error");
                                   }
                                 }),
-                            Text(_text),
+                            // Text(_text),
                           ],
                         ),
                       ),

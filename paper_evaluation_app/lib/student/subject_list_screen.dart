@@ -56,39 +56,42 @@ class SubjectListScreen extends StatelessWidget {
                 //         );
                 //       }),
                 // );
-                return Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                height: MediaQuery.of(context).size.height-200,
-                child: Padding(
-                  padding: const EdgeInsets.only(top:50.0),
-                  child: ListView.builder(
-                      itemCount: subjectList.length,
-                      padding: EdgeInsets.only(top:0),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          // elevation: 5,
-                          child: Container(
-                            height: 80,
+                return Padding(
+                  padding: const EdgeInsets.only(top:60.0),
+                  child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                  height: MediaQuery.of(context).size.height-150,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top:50.0),
+                    child: ListView.builder(
+                        itemCount: subjectList.length,
+                        padding: EdgeInsets.only(top:0),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            // elevation: 5,
                             child: Container(
-                              child: ListTile(
-                                leading: const Icon(Icons.auto_stories),
-                                tileColor: Colors.white,
-                                title: Text('${subjectList[index]}'),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        QuestionPaperListScreen(teacherUid,subjectList[index])),
-                                  );
-                                },
-                              ),  
+                              height: 80,
+                              child: Container(
+                                child: ListTile(
+                                  leading: const Icon(Icons.auto_stories),
+                                  tileColor: Colors.white,
+                                  title: Text('${subjectList[index]}'),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          QuestionPaperListScreen(teacherUid,subjectList[index])),
+                                    );
+                                  },
+                                ),  
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                ),
-              );
+                          );
+                        }),
+                  ),
+              ),
+                );
               } else
                 return Container();
             }));

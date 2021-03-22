@@ -136,11 +136,35 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
           } else if (snapshot.hasData) {
             Map<String, dynamic> questionContent = snapshot.data;
             return Scaffold(
+              backgroundColor: Color(0xFF6F35A5),
                 key: _scaffoldKey,
                 appBar: AppBar(
                   backgroundColor: Color(0xFF6F35A5),
                   title: Text(widget.questionPaperName),
                 ),
+              body:Padding(
+                padding: const EdgeInsets.only(top:60.0),
+                child: Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:50.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+
+                    children: [
+                      
+                      // Text('Question text for ${widget.questionNumber}'),
+                      questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
+                      questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
+                      questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
+                      
+                    ],
+                  ))
+                ),
+              ),
                 floatingActionButton: SpeedDial(
                     marginEnd: 18,
                     marginBottom: 20,
@@ -187,18 +211,19 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                         onLongPress: () => print('Second CHILD LONG PRESS'),
                       ),
                     ]),
-                body: Container(
-                    // height: MediaQuery.of(context).size.height*0.8,
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Text('Question text for ${widget.questionNumber}'),
-                    questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
-                    questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
-                    questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
-                  ],
-                )));
+                // body: Container(
+                //     // height: MediaQuery.of(context).size.height*0.8,
+                //     child: Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     // Text('Question text for ${widget.questionNumber}'),
+                //     questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
+                //     questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
+                //     questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
+                //   ],
+                // )));
+    );
           }
         });
   }

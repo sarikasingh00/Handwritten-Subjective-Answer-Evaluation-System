@@ -25,20 +25,6 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   backgroundColor: Theme.of(context).primaryColor,
-    //   key: _scaffoldKey,
-    //   appBar: AppBar(
-    //     backgroundColor: Color(0xFF6F35A5),
-    //     title: Text("Teacher Dashboard"),
-    //     actions: [
-    //       FlatButton(
-    //           onPressed: () {
-    //             UserManagement().signOut(context);
-    //           },
-    //           child: Text("Sign out", style: Theme.of(context).appBarTheme.textTheme.button,)),
-    //     ],
-    //   ),
     return Scaffold(
       backgroundColor: Color(0xFF6F35A5),
       appBar: AppBar(
@@ -48,59 +34,56 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
           "Teacher Dashboard",
           style: TextStyle(color: Colors.white),
         ),
-        // leading: IconButton(
-        //   icon: Icon(Icons.menu, color: Colors.white70,),
-        //   onPressed: (){
-        //     ListView(
-        //       padding: EdgeInsets.zero,
-        //       children: [
-        //         ListTile(
-        //           title:Text('Sign out'),
-        //           onTap: (){
-        //             UserManagement().signOut(context);
-        //           },
-        //         ),
-        //       ],
-        //     );
-        //   },
-        //   ),
-      ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Teacher Dashboard'),
-              decoration: BoxDecoration(
-                color: Color(0xFF6F35A5),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(
+                child: Text("Sign Out"),
+                value: "Signout",
               ),
-            ),
-            ListTile(
-              title: Text('Sign Out'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
+            ],
+            onSelected: (value) {
                 UserManagement().signOut(context);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
+            },
+          ),
+        ],
       ),
+      // drawer: Drawer(
+      //   // Add a ListView to the drawer. This ensures the user can scroll
+      //   // through the options in the drawer if there isn't enough vertical
+      //   // space to fit everything.
+      //   child: ListView(
+      //     // Important: Remove any padding from the ListView.
+      //     padding: EdgeInsets.zero,
+      //     children: <Widget>[
+      //       DrawerHeader(
+      //         child: Text('Teacher Dashboard'),
+      //         decoration: BoxDecoration(
+      //           color: Color(0xFF6F35A5),
+      //         ),
+      //       ),
+      //       ListTile(
+      //         title: Text('Sign Out'),
+      //         onTap: () {
+      //           // Update the state of the app
+      //           // ...
+      //           // Then close the drawer
+      //           UserManagement().signOut(context);
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //       ListTile(
+      //         title: Text('Item 2'),
+      //         onTap: () {
+      //           // Update the state of the app
+      //           // ...
+      //           // Then close the drawer
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

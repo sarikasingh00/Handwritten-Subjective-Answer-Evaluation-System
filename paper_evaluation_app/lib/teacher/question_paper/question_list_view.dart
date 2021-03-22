@@ -27,39 +27,6 @@ class _QuestionListViewState extends State<QuestionListView> {
             List<String> questionList = snapshot.data;
             questionList.sort();
             return Container(
-<<<<<<< HEAD
-              decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-              height: MediaQuery.of(context).size.height-235,
-              child: questionList.isEmpty ?Container(decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-              height: MediaQuery.of(context).size.height-235, child: Text("No questions"),) :Padding(
-                  padding: const EdgeInsets.only(top:50.0),
-                  child: ListView.builder(
-                      itemCount: questionList.length,
-                      padding: EdgeInsets.only(top:0),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          // elevation: 5,
-                          child: Container(
-                            height: 80,
-                            child: Container(
-                              child: ListTile(
-                                leading: const Icon(Icons.assignment),
-                                tileColor: Colors.white,
-                                title: Text('${questionList[index]}'),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            QuestionDetailScreen(widget.subjectName, widget.questionPaperName, questionList[index])),
-                                  );
-                                },
-                              ), 
-                            ),
-                          ),
-                        );
-                      }),
-=======
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(60),
@@ -107,7 +74,6 @@ class _QuestionListViewState extends State<QuestionListView> {
                               ),
                             );
                           }),
->>>>>>> 1dbb8b65108ed31ee1d9f7b6431fd2edf283bb71
                     ),
             );
           } else

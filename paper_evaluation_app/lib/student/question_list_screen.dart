@@ -47,16 +47,79 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                 bool finished =
                     questionList[questionList.length - 1]['finished_attempt'];
                 questionList.removeAt(questionList.length - 1);
-                return Column(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      child: ListView.builder(
-                          itemCount: questionList.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              elevation: 5,
-                              child: ListTile(
+                // return Column(
+                //   children: [
+                //     Container(
+                //       height: MediaQuery.of(context).size.height * 0.8,
+                //       child: ListView.builder(
+                //           itemCount: questionList.length,
+                //           itemBuilder: (context, index) {
+                //             return Card(
+                //               elevation: 5,
+                //               child: ListTile(
+                //                 title:
+                //                     Text('${questionList[index].keys.first}'),
+                //                 trailing: questionList[index]
+                //                         [questionList[index].keys.elementAt(0)]
+                //                     ? Icon(Icons.assignment_turned_in)
+                //                     : Icon(Icons.arrow_forward),
+                //                 onTap: () async {
+                //                   if (finished) {
+                //                     Scaffold.of(context).showSnackBar(SnackBar(
+                //                         content: Text('Finished attempt')));
+                //                   } else {
+                //                     await Navigator.push(
+                //                         context,
+                //                         MaterialPageRoute(
+                //                             builder: (context) =>
+                //                                 QuestionScreen(
+                //                                     widget.teacherUid,
+                //                                     widget.subjectName,
+                //                                     widget.questionPaperName,
+                //                                     questionList[index]
+                //                                         .keys
+                //                                         .first)));
+                //                     setState(() {});
+                //                   }
+                //                 },
+                //               ),
+                //             );
+                //           }),
+                //     ),
+                //     finished
+                //         ? FlatButton(
+                //             onPressed: null, child: Text('Finished Attempt'))
+                //         : RaisedButton(
+                //             onPressed: () async {
+                //                 await StudentDB().finishAttempt(
+                //                     widget.teacherUid,
+                //                     widget.subjectName,
+                //                     widget.questionPaperName);
+                //                 setState(() {
+                                  
+                //                 });
+                //             },
+                //             child: Text('Finish attempt'),
+                //           )
+                //   ],
+                // );
+                return Padding(
+                  padding: const EdgeInsets.only(top:60.0),
+                  child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                  height: MediaQuery.of(context).size.height-235,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top:50.0),
+                    child: ListView.builder(
+                        itemCount: questionList.length,
+                        padding: EdgeInsets.only(top:0),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            // elevation: 5,
+                            child: Container(
+                              height: 80,
+                              child: Container(
+                                child: ListTile(
                                 title:
                                     Text('${questionList[index].keys.first}'),
                                 trailing: questionList[index]
@@ -83,28 +146,20 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                                   }
                                 },
                               ),
-                            );
-                          }),
-                    ),
-                    finished
-                        ? FlatButton(
-                            onPressed: null, child: Text('Finished Attempt'))
-                        : RaisedButton(
-                            onPressed: () async {
-                                await StudentDB().finishAttempt(
-                                    widget.teacherUid,
-                                    widget.subjectName,
-                                    widget.questionPaperName);
-                                setState(() {
-                                  
-                                });
-                            },
-                            child: Text('Finish attempt'),
-                          )
-                  ],
+                              ),
+                            ),
+                          );
+                          
+                        }),
+                        
+                  ),
+                  
+              ),
+              
                 );
               } else
                 return Container();
-            }));
+            })
+    );
   }
 }

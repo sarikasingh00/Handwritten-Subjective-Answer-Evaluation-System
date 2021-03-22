@@ -37,60 +37,42 @@ class QuestionPaperListScreen extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
                 List<String> questionPaperList = snapshot.data;
-                // return Container(
-                //   height: MediaQuery.of(context).size.height * 0.8,
-                //   child: ListView.builder(
-                //       itemCount: questionPaperList.length,
-                //       itemBuilder: (context, index) {
-                //         return Card(
-                //           elevation: 5,
-                //           child: ListTile(
-                //             title: Text('${questionPaperList[index]}'),
-                //             onTap: () {
-                //               Navigator.push(
-                //                 context,
-                //                 MaterialPageRoute(
-                //                     builder: (context) =>
-                //                         QuestionListScreen(teacherUid,subjectName,questionPaperList[index])),
-                //               );
-                //             },
-                //           ),
-                //         );
-                //       }),
-                // );
-                return Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                height: MediaQuery.of(context).size.height-235,
-                child: Padding(
-                  padding: const EdgeInsets.only(top:50.0),
-                  child: ListView.builder(
-                      itemCount: questionPaperList.length,
-                      padding: EdgeInsets.only(top:0),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          // elevation: 5,
-                          child: Container(
-                            height: 80,
+                return Padding(
+                  padding: const EdgeInsets.only(top:60.0),
+                  child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                  height: MediaQuery.of(context).size.height-150,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top:50.0),
+                    child: ListView.builder(
+                        itemCount: questionPaperList.length,
+                        padding: EdgeInsets.only(top:0),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            // elevation: 5,
                             child: Container(
-                              child: ListTile(
-                                leading: const Icon(Icons.assignment),
-                                tileColor: Colors.white,
-                                title: Text('${questionPaperList[index]}'),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        QuestionListScreen(teacherUid,subjectName,questionPaperList[index])),
-                                  );
-                                },
-                              ),  
+                              height: 80,
+                              child: Container(
+                                child: ListTile(
+                                  leading: const Icon(Icons.assignment),
+                                  tileColor: Colors.white,
+                                  title: Text('${questionPaperList[index]}'),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          QuestionListScreen(teacherUid,subjectName,questionPaperList[index])),
+                                    );
+                                  },
+                                ),  
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                ),
-              );
+                          );
+                        }),
+                  ),
+              ),
+                );
               } else
                 return Container();
             }));

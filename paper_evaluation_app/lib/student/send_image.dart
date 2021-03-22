@@ -15,7 +15,7 @@ class SendImage {
 
     // string to uri
     // var uri = Uri.parse("http://192.168.1.14:5000/");
-    var uri = Uri.parse("http://192.168.0.108:5000/");
+    var uri = Uri.parse("http://192.168.0.102:5000/");
 
     // create multipart request
     var request = new http.MultipartRequest("POST", uri);

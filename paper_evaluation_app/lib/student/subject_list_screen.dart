@@ -17,16 +17,29 @@ class SubjectListScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("Student Dashboard"),
           backgroundColor: Color(0xFF6F35A5),
+          // actions: [
+          //   FlatButton(
+          //       onPressed: () {
+          //         UserManagement().signOut(context);
+          //       },
+          //       child: Text(
+          //         "Sign out",
+          //         style: Theme.of(context).appBarTheme.textTheme.button,
+          //       )),
+          // ],
           actions: [
-            FlatButton(
-                onPressed: () {
-                  UserManagement().signOut(context);
-                },
-                child: Text(
-                  "Sign out",
-                  style: Theme.of(context).appBarTheme.textTheme.button,
-                )),
-          ],
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(
+                child: Text("Sign Out"),
+                value: "Signout",
+              ),
+            ],
+            onSelected: (value) {
+                UserManagement().signOut(context);
+            },
+          ),
+        ],
         ),
         body: FutureBuilder(
             future: StudentDB().getSubjects(teacherUid),
@@ -35,27 +48,6 @@ class SubjectListScreen extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
                 List<String> subjectList = snapshot.data;
-                // return Container(
-                //   height: MediaQuery.of(context).size.height * 0.8,
-                //   child: ListView.builder(
-                //       itemCount: subjectList.length,
-                //       itemBuilder: (context, index) {
-                //         return Card(
-                //           elevation: 5,
-                //           child: ListTile(
-                //             title: Text('${subjectList[index]}'),
-                //             onTap: () {
-                //               Navigator.push(
-                //                 context,
-                //                 MaterialPageRoute(
-                //                     builder: (context) =>
-                //                         QuestionPaperListScreen(teacherUid,subjectList[index])),
-                //               );
-                //             },
-                //           ),
-                //         );
-                //       }),
-                // );
                 return Padding(
                   padding: const EdgeInsets.only(top:60.0),
                   child: Container(

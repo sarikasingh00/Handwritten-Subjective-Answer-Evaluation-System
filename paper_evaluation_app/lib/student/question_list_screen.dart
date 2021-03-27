@@ -26,15 +26,18 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
           title: Text("Student Dashboard"),
           backgroundColor: Color(0xFF6F35A5),
           actions: [
-            FlatButton(
-                onPressed: () {
-                  UserManagement().signOut(context);
-                },
-                child: Text(
-                  "Sign out",
-                  style: Theme.of(context).appBarTheme.textTheme.button,
-                )),
-          ],
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(
+                child: Text("Sign Out"),
+                value: "Signout",
+              ),
+            ],
+            onSelected: (value) {
+                UserManagement().signOut(context);
+            },
+          ),
+        ],
         ),
         body: FutureBuilder(
             future: StudentDB().getQuestions(widget.teacherUid,
@@ -45,117 +48,88 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
               } else if (snapshot.hasData) {
                 List<Map<String, bool>> questionList = snapshot.data;
                 bool finished =
-                    questionList[questionList.length - 1]['finished_attempt'];
+                questionList[questionList.length - 1]['finished_attempt'];
                 questionList.removeAt(questionList.length - 1);
-                // return Column(
-                //   children: [
-                //     Container(
-                //       height: MediaQuery.of(context).size.height * 0.8,
-                //       child: ListView.builder(
-                //           itemCount: questionList.length,
-                //           itemBuilder: (context, index) {
-                //             return Card(
-                //               elevation: 5,
-                //               child: ListTile(
-                //                 title:
-                //                     Text('${questionList[index].keys.first}'),
-                //                 trailing: questionList[index]
-                //                         [questionList[index].keys.elementAt(0)]
-                //                     ? Icon(Icons.assignment_turned_in)
-                //                     : Icon(Icons.arrow_forward),
-                //                 onTap: () async {
-                //                   if (finished) {
-                //                     Scaffold.of(context).showSnackBar(SnackBar(
-                //                         content: Text('Finished attempt')));
-                //                   } else {
-                //                     await Navigator.push(
-                //                         context,
-                //                         MaterialPageRoute(
-                //                             builder: (context) =>
-                //                                 QuestionScreen(
-                //                                     widget.teacherUid,
-                //                                     widget.subjectName,
-                //                                     widget.questionPaperName,
-                //                                     questionList[index]
-                //                                         .keys
-                //                                         .first)));
-                //                     setState(() {});
-                //                   }
-                //                 },
-                //               ),
-                //             );
-                //           }),
-                //     ),
-                //     finished
-                //         ? FlatButton(
-                //             onPressed: null, child: Text('Finished Attempt'))
-                //         : RaisedButton(
-                //             onPressed: () async {
-                //                 await StudentDB().finishAttempt(
-                //                     widget.teacherUid,
-                //                     widget.subjectName,
-                //                     widget.questionPaperName);
-                //                 setState(() {
-                                  
-                //                 });
-                //             },
-                //             child: Text('Finish attempt'),
-                //           )
-                //   ],
-                // );
-                return Padding(
-                  padding: const EdgeInsets.only(top:60.0),
-                  child: Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                  height: MediaQuery.of(context).size.height-235,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top:50.0),
-                    child: ListView.builder(
-                        itemCount: questionList.length,
-                        padding: EdgeInsets.only(top:0),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            // elevation: 5,
-                            child: Container(
-                              height: 80,
-                              child: Container(
-                                child: ListTile(
-                                title:
-                                    Text('${questionList[index].keys.first}'),
-                                trailing: questionList[index]
-                                        [questionList[index].keys.elementAt(0)]
-                                    ? Icon(Icons.assignment_turned_in)
-                                    : Icon(Icons.arrow_forward),
-                                onTap: () async {
-                                  if (finished) {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text('Finished attempt')));
-                                  } else {
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                QuestionScreen(
-                                                    widget.teacherUid,
-                                                    widget.subjectName,
-                                                    widget.questionPaperName,
-                                                    questionList[index]
-                                                        .keys
-                                                        .first)));
-                                    setState(() {});
-                                  }
-                                },
-                              ),
-                              ),
+                print(questionList.length);
+                return Container(
+                    height: MediaQuery.of(context).size.height,
+                    child:Padding(
+                      padding: const EdgeInsets.only(top:60.0),
+                      child: Container(
+                        padding: EdgeInsets.only(top:60),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                        height: MediaQuery.of(context).size.height,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height-300,
+                              child: ListView.builder(
+                                  itemCount: questionList.length,
+                                  itemBuilder: (context, index) {
+                                    return Material(
+                                      color: Colors.white,
+                                      elevation: 0,
+                                      child: ListTile(
+                                        title:
+                                            Text('${questionList[index].keys.first}'),
+                                        trailing: questionList[index]
+                                                [questionList[index].keys.elementAt(0)]
+                                            ? Icon(Icons.assignment_turned_in)
+                                            : Icon(Icons.arrow_forward),
+                                        onTap: () async {
+                                          if (finished) {
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                                content: Text('Finished attempt')));
+                                          } else {
+                                            await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        QuestionScreen(
+                                                            widget.teacherUid,
+                                                            widget.subjectName,
+                                                            widget.questionPaperName,
+                                                            questionList[index]
+                                                                .keys
+                                                                .first)));
+                                            setState(() {});
+                                          }
+                                        },
+                                      ),
+                                    );
+                                  }),
                             ),
-                          );
-                          
-                        }),
-                        
-                  ),
+                            finished
+                        ? FlatButton(
+                            onPressed: null, child: Text('Finished Attempt'))
+                        : SizedBox(
+                          height: 60,
+                          width: 300,
+                          child: RaisedButton(
+                            color: Color(0xFF6F35A5),
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                              onPressed: () async {
+                                  await StudentDB().finishAttempt(
+                                      widget.teacherUid,
+                                      widget.subjectName,
+                                      widget.questionPaperName);
+                                  setState(() {
+                                    
+                                  });
+                              },
+                              child: Text(
+                                'Finish attempt',
+                                style: TextStyle(fontSize: 16),
+                                ),
+                            ),
+                        )
+                          ],
+                        ),
+                      ),
+                    ),
                   
-              ),
-              
                 );
               } else
                 return Container();

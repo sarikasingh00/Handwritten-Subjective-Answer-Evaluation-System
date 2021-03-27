@@ -100,14 +100,6 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
                               _scaffoldKey.currentState.showSnackBar(SnackBar(
                                 content: Text('New Question Added'),
                               ));
-                              //  _scaffoldKey.currentState.build(context);
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           QuestionPaperDetailScreen(widget.subjectName,widget.questionPaperName)),
-                              // );
-                              // Scaffold.of(context).setState(() {});
                             },
                           ),
                         ),

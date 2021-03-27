@@ -20,15 +20,18 @@ class QuestionPaperListScreen extends StatelessWidget {
           title: Text("Student Dashboard"),
           backgroundColor: Color(0xFF6F35A5),
           actions: [
-            FlatButton(
-                onPressed: () {
-                  UserManagement().signOut(context);
-                },
-                child: Text(
-                  "Sign out",
-                  style: Theme.of(context).appBarTheme.textTheme.button,
-                )),
-          ],
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(
+                child: Text("Sign Out"),
+                value: "Signout",
+              ),
+            ],
+            onSelected: (value) {
+                UserManagement().signOut(context);
+            },
+          ),
+        ],
         ),
         body: FutureBuilder(
             future: StudentDB().getQuestionPapers(teacherUid, subjectName),

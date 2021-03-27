@@ -234,13 +234,13 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                 height: MediaQuery.of(context).size.height-145,
                 width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
-                    itemCount: questionContent.length,
+                    itemCount: questionContent['answer'].length,
                     padding: EdgeInsets.only(top:0),
                     itemBuilder: (context, index) {
                       return Container(
                         // elevation: 5,
                         child: Container(
-                          height: 80,
+                          // height: 80,
                           child: Container(
                             padding: const EdgeInsets.only(top:50.0),
                             child: ListTile(

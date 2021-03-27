@@ -40,22 +40,19 @@ class _StudentDashboardState extends State<StudentDashboard> {
             ],
           ),
           actions: [
-            FlatButton(
-                onPressed: () {
-                  UserManagement().signOut(context);
-                },
-                child: Text(
-                  "Sign out",
-                  style: Theme.of(context).appBarTheme.textTheme.button,
-                )),
-          ],
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(
+                child: Text("Sign Out"),
+                value: "Signout",
+              ),
+            ],
+            onSelected: (value) {
+                UserManagement().signOut(context);
+            },
+          ),
+        ],
         ),
-        // body: TabBarView(
-        //   children: <Widget>[
-        //     TeacherListView(),
-        //     AttemptedPapersListView(),
-        //   ],
-        // ),
         body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

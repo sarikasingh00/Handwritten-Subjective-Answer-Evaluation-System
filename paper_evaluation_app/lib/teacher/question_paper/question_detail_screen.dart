@@ -193,42 +193,6 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                       )
                     ],
                   ),
-                
-                  // Container(
-                  //   decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                  //   height: MediaQuery.of(context).size.height-150,
-                  //   padding: const EdgeInsets.only(top:50.0),
-                  //   child: ListView.builder(
-                  //         itemCount: questionContent.length,
-                  //         padding: EdgeInsets.only(top:0),
-                  //         itemBuilder: (context, index) {
-                  //           return Container(
-                  //             // elevation: 5,
-                  //             child: Container(
-                  //               height: 80,
-                  //               child: Container(
-                  //                 child: ListTile(
-                  //                   leading: const Icon(Icons.assignment),
-                  //                   tileColor: Colors.white,
-                  //                   title: Text('${questionContent[index]}'),
-                  //                   onTap: () {
-                  //                     Navigator.push(
-                  //                       context,
-                  //                       MaterialPageRoute(
-                  //                           builder: (context) =>
-                  //                           questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
-                  //                               // QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
-                  //                     ),
-                  //                     );
-                  //                   },
-                  //                 ),
-                                  
-                  //               ),
-                  //             ),
-                  //           );
-                  //         }),
-                  //   ),
-                  
                 Container(
                 decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
                 height: MediaQuery.of(context).size.height-145,
@@ -261,19 +225,6 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                         ),
                       );
                     }),
-                  // child: Column(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-
-                  //   children: [
-                      
-                  //     // Text('Question text for ${widget.questionNumber}'),
-                  //     //questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
-                  //     questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
-                  //     questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
-                      
-                  //   ],
-                  // )
                 ),
               
                 ],

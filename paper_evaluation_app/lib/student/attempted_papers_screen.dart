@@ -18,14 +18,17 @@ class AttemptedPapersScreen extends StatelessWidget {
         backgroundColor: Color(0xFF6F35A5),
         title: Text("Student Dashboard"),
         actions: [
-          FlatButton(
-              onPressed: () {
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(
+                child: Text("Sign Out"),
+                value: "Signout",
+              ),
+            ],
+            onSelected: (value) {
                 UserManagement().signOut(context);
-              },
-              child: Text(
-                "Sign out",
-                style: Theme.of(context).appBarTheme.textTheme.button,
-              )),
+            },
+          ),
         ],
       ),
       body: FutureBuilder(
@@ -38,112 +41,85 @@ class AttemptedPapersScreen extends StatelessWidget {
             var keysList = questionList.keys.toList();
             print(keysList);
             print(questionList);
-            // return Column(
-            //   children: [
-            //     Container(
-            //       height: MediaQuery.of(context).size.height * 0.8,
-            //       child: ListView.builder(
-            //           itemCount: keysList.length,
-            //           itemBuilder: (context, index) {
-            //             return questionList.keys.elementAt(index) ==
-            //                         'finished_attempt' ||
-            //                     questionList.keys.elementAt(index) ==
-            //                         'total_marks'
-            //                 ? Container()
-            //                 : Card(
-            //                     elevation: 5,
-            //                     child: ListTile(
-            //                         title: Text(
-            //                             '${questionList.keys.elementAt(index)}'),
-            //                         trailing: Text(
-            //                             '${questionList[keysList[index]].values.elementAt(0)}'),
-            //                         onTap: () {
-            //                           Navigator.push(
-            //                               context,
-            //                               MaterialPageRoute(
-            //                                   builder: (context) =>
-            //                                       AttemptedQuestionWiseMarks(
-            //                                           questionList[
-            //                                                   keysList[index]]
-            //                                               .keys
-            //                                               .elementAt(0),
-            //                                           questionList[
-            //                                                   keysList[index]]
-            //                                               .values
-            //                                               .elementAt(0).toString())));
-            //                         }),
-            //                   );
-            //           }),
-            //     ),
-            //     Container(
-            //       child: Row(
-            //         children: [
-            //           Text('Total Marks: '),
-            //           Text('${questionList['total_marks']}')
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // );
             return Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-              height: MediaQuery.of(context).size.height-235,
+              height: MediaQuery.of(context).size.height,
               child: Padding(
-                padding: const EdgeInsets.only(top:50.0),
-                child: ListView.builder(
-                    itemCount: keysList.length,
-                    padding: EdgeInsets.only(top:0),
-                    itemBuilder: (context, index) {
-                      return questionList.keys.elementAt(index) ==
-                                    'finished_attempt' ||
-                                questionList.keys.elementAt(index) ==
-                                    'total_marks'
-                                    ?
-                      Container()
-                      :
-                      Container(
-                        // elevation: 5,
-                        child: Container(
-                          height: 80,
-                          child: Container(
-                            child: ListTile(
-                              leading: const Icon(Icons.auto_stories),
-                              tileColor: Colors.white,
-                              title: Text(
-                                        '${questionList.keys.elementAt(index)}'),
-                                    trailing: Text(
-                                        '${questionList[keysList[index]].values.elementAt(0)}'),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                                  AttemptedQuestionWiseMarks(
-                                                      questionList[
-                                                              keysList[index]]
-                                                          .keys
-                                                          .elementAt(0),
-                                                      questionList[
-                                                              keysList[index]]
-                                                          .values
-                                                          .elementAt(0).toString()))
-                                );
-                              },
-                            ),  
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-            );
-            Container(
-                  child: Row(
+                padding: const EdgeInsets.only(top:60.0),
+                child: Container(
+                  padding: const EdgeInsets.only(top:60.0),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                  height: MediaQuery.of(context).size.height-235,
+                  child: Column(
                     children: [
-                      Text('Total Marks: '),
-                      Text('${questionList['total_marks']}')
+                      Container(
+                        height: MediaQuery.of(context).size.height-270,
+                        child: ListView.builder(
+                            itemCount: keysList.length,
+                            padding: EdgeInsets.only(top:0),
+                            itemBuilder: (context, index) {
+                              return questionList.keys.elementAt(index) ==
+                                            'finished_attempt' ||
+                                        questionList.keys.elementAt(index) ==
+                                            'total_marks'
+                                            ?
+                              Container()
+                              :
+                              Container(
+                                // elevation: 5,
+                                child: Container(
+                                  height: 80,
+                                  child: Container(
+                                    child: ListTile(
+                                      leading: const Icon(Icons.auto_stories),
+                                      tileColor: Colors.white,
+                                      title: Text(
+                                                '${questionList.keys.elementAt(index)}'),
+                                            trailing: Text(
+                                                '${questionList[keysList[index]].values.elementAt(0)}'),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                          AttemptedQuestionWiseMarks(
+                                                              questionList[
+                                                                      keysList[index]]
+                                                                  .keys
+                                                                  .elementAt(0),
+                                                              questionList[
+                                                                      keysList[index]]
+                                                                  .values
+                                                                  .elementAt(0).toString()))
+                                        );
+                                      },
+                                    ),  
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Total Marks: ',
+                        style: TextStyle(fontSize: 20),
+                        ),
+                      Text(
+                        '${questionList['total_marks']}',
+                        style: TextStyle(fontSize: 20),
+                        )
                     ],
                   ),
-                );
+                ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+            
           } else
             return Container();
         },

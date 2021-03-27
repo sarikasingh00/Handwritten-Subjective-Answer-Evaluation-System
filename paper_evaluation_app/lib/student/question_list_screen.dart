@@ -64,9 +64,6 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
                             Container(
                               height: MediaQuery.of(context).size.height-300,
                               child: ListView.builder(
-                                  // physics: NeverScrollableScrollPhysics(),
-                                  // shrinkWrap: true,
-                                  // primary: false,
                                   itemCount: questionList.length,
                                   itemBuilder: (context, index) {
                                     return Material(

@@ -19,13 +19,14 @@ class _NewQuestionPaperState extends State<NewQuestionPaper> {
   final nameController = TextEditingController();
   // var subjectAdded ;
 
-  Future<void> _submitData() async {
+  Future<void> _submitData(context) async {
     if (nameController.text.isNotEmpty) {
       await TeacherDB()
           .addQuestionPaper(nameController.text, widget.subjectName,context, widget.scaffoldKey);
       Scaffold.of(widget.mainContext).setState(() {
         
       });
+    
       // State c = widget.scaffoldKey.currentState;
       // c.
       // Scaffold.of(context).build(context);
@@ -35,6 +36,11 @@ class _NewQuestionPaperState extends State<NewQuestionPaper> {
       // Scaffold.of(c).build(c);
       // Navigator.of(widget.mainContext).pushReplacementNamed('/subje'); TODO
       // setState(() {});
+    }
+    else{
+      print("in else");
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter the name of question paper please"),));
     }
     // return subjectadded;
   }
@@ -59,7 +65,7 @@ class _NewQuestionPaperState extends State<NewQuestionPaper> {
                 // onSubmitted: (_) => __submitData(),
               ),
               RaisedButton(
-                  onPressed: _submitData,
+                  onPressed: (){_submitData(context);},
                   child: Text(
                     'Add Question Paper',
                   ),

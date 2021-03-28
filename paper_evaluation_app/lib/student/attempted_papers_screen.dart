@@ -16,7 +16,10 @@ class AttemptedPapersScreen extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(0xFF6F35A5),
-        title: Text("Student Dashboard"),
+        title: Text(
+          attemptedPaperPath.substring(attemptedPaperPath.lastIndexOf('/')+1,attemptedPaperPath.length),
+          style: TextStyle(fontSize: 24),
+        ),
         actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext bc) => [
@@ -89,7 +92,7 @@ class AttemptedPapersScreen extends StatelessWidget {
                                                               questionList[
                                                                       keysList[index]]
                                                                   .values
-                                                                  .elementAt(0).toString()))
+                                                                  .elementAt(0).toString(),'${questionList.keys.elementAt(index)}'))
                                         );
                                       },
                                     ),  

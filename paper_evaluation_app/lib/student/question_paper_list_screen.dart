@@ -17,7 +17,10 @@ class QuestionPaperListScreen extends StatelessWidget {
         backgroundColor: Color(0xFF6F35A5),
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text("Student Dashboard"),
+          title: Text(
+            subjectName,
+            style: TextStyle(fontSize: 24),
+            ),
           backgroundColor: Color(0xFF6F35A5),
           actions: [
           PopupMenuButton(

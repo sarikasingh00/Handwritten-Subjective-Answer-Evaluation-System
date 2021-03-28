@@ -34,7 +34,10 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
       backgroundColor: Color(0xFF6F35A5),
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(widget.subjectName),
+        title: Text(
+          widget.subjectName,
+          style: TextStyle(fontSize: 24),
+          ),
         backgroundColor: Color(0xFF6F35A5),
         ),
       body: SingleChildScrollView(

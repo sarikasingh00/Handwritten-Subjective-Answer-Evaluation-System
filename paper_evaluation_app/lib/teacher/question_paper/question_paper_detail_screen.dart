@@ -28,6 +28,7 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
       appBar: AppBar(
         title: Text(
           widget.questionPaperName,
+          style: TextStyle(fontSize: 24),
         ),
         actions: [
           PopupMenuButton(

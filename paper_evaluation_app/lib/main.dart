@@ -54,10 +54,6 @@ class MyApp extends StatelessWidget {
           future: getCurrentUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              // return Scaffold(
-              //   backgroundColor: Theme.of(context).primaryColor,
-              //   body: Center(child: CircularProgressIndicator()),
-              // );
               return SplashScreen();
             } else {
               if (snapshot.hasData) {

@@ -32,7 +32,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
         elevation: 0,
         title: Text(
           "Teacher Dashboard",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white,fontSize: 24),
         ),
         actions: [
           PopupMenuButton(
@@ -48,42 +48,6 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
           ),
         ],
       ),
-      // drawer: Drawer(
-      //   // Add a ListView to the drawer. This ensures the user can scroll
-      //   // through the options in the drawer if there isn't enough vertical
-      //   // space to fit everything.
-      //   child: ListView(
-      //     // Important: Remove any padding from the ListView.
-      //     padding: EdgeInsets.zero,
-      //     children: <Widget>[
-      //       DrawerHeader(
-      //         child: Text('Teacher Dashboard'),
-      //         decoration: BoxDecoration(
-      //           color: Color(0xFF6F35A5),
-      //         ),
-      //       ),
-      //       ListTile(
-      //         title: Text('Sign Out'),
-      //         onTap: () {
-      //           // Update the state of the app
-      //           // ...
-      //           // Then close the drawer
-      //           UserManagement().signOut(context);
-      //           Navigator.pop(context);
-      //         },
-      //       ),
-      //       ListTile(
-      //         title: Text('Item 2'),
-      //         onTap: () {
-      //           // Update the state of the app
-      //           // ...
-      //           // Then close the drawer
-      //           Navigator.pop(context);
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

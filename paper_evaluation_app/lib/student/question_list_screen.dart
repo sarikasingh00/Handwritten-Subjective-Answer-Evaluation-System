@@ -23,7 +23,10 @@ class _QuestionListScreenState extends State<QuestionListScreen> {
         backgroundColor: Color(0xFF6F35A5),
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text("Student Dashboard"),
+          title: Text(
+            widget.questionPaperName,
+            style: TextStyle(fontSize: 24),
+            ),
           backgroundColor: Color(0xFF6F35A5),
           actions: [
           PopupMenuButton(

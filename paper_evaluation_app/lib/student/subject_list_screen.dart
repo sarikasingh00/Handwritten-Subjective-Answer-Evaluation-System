@@ -15,18 +15,11 @@ class SubjectListScreen extends StatelessWidget {
         backgroundColor: Color(0xFF6F35A5),
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text("Student Dashboard"),
+          title: Text(
+            "Your Subjects",
+            style: TextStyle(fontSize: 24),
+          ),
           backgroundColor: Color(0xFF6F35A5),
-          // actions: [
-          //   FlatButton(
-          //       onPressed: () {
-          //         UserManagement().signOut(context);
-          //       },
-          //       child: Text(
-          //         "Sign out",
-          //         style: Theme.of(context).appBarTheme.textTheme.button,
-          //       )),
-          // ],
           actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext bc) => [

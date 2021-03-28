@@ -25,10 +25,13 @@ class _StudentDashboardState extends State<StudentDashboard> {
         key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text('Student Dashboard'),
+          title: Text(
+            'Student Dashboard',
+            style: TextStyle(fontSize: 24),
+            ),
           bottom: TabBar(
-            indicatorColor: Colors.yellow,
-            labelColor: Colors.yellow,
+            indicatorColor: Color(0xFFE1BEE7),
+            labelColor: Color(0xFFE1BEE7),
             unselectedLabelColor: Colors.white,
             tabs: <Widget>[
               Tab(

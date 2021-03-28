@@ -44,7 +44,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
         backgroundColor: Color(0xFF6F35A5),
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text("Student Dashboard"),
+          title: Text(
+            widget.questionNumber,
+            style: TextStyle(fontSize: 24),
+            ),
           backgroundColor: Color(0xFF6F35A5),
           actions: [
           PopupMenuButton(
@@ -71,100 +74,100 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
                 Map<String, dynamic> questionText = snapshot.data;
-                return Column(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>
-                        [
-                          Padding(
-                            padding: const EdgeInsets.only(top:18),
-                            child: SizedBox(
-                              height: 30,
-
-                              child:questionText.containsKey('question')?Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(questionText['question'],style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold,),),
-                              SizedBox(width:15),
-                              Text(questionText['total_marks'].toString(),style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold),),
-                            ],
-                          ) : Text('No question text added yet, please contact your Teacher',style: TextStyle(color: Colors.white),),
-                        ), 
-                      ),
-                      SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  ),
-                    Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                      height: MediaQuery.of(context).size.height-145,
-                      width: MediaQuery.of(context).size.width,
-                      child: Expanded(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.insert_drive_file),
-                                onPressed: () {
-                                  getImage(false);
-                                },
-                              ),
-                              SizedBox(height: 30.0),
-                              IconButton(
-                                icon: Icon(Icons.camera_alt),
-                                onPressed: () {
-                                  getImage(true);
-                                },
-                              ),
-                              _image == null
-                                  ? Container()
-                                  : Image.file(
-                                      _image,
-                                      height: 300.0,
-                                      width: 300.0,
-                                    ),
-                              Padding(
-                                padding: const EdgeInsets.only(top:58.0),
-                                child: SizedBox(
-                                  width: 200.0,
-                                  height: 50.0,
-                                  child: RaisedButton(
-                                    color: Color(0xFF6F35A5),
-                                    textColor: Colors.white,
-                                      child: Text("Send Image"),
-                                      shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(30.0)),
-                                      onPressed: () {
-                                        if (_image != null) {
-                                          SendImage()
-                                              .getExtractedText(_image, questionText['answer'].toString())
-                                              .then((value) {
-                                            print("hello $value");
-                                            setState(() {
-                                              _text = "Answer recordded!";
-                                              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Answer recorded'),));
-                                              print(value);
-                                            });
-                                            StudentDB().addAnswer(widget.teacherUid, widget.subjectName, widget.questionPaperName, widget.questionNumber, value['text'], value['marks']);
-                                          });
-                                        } else {
-                                          print("Error");
-                                        }
-                                      }),
+                return SingleChildScrollView(
+                    child: Column(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>
+                          [
+                            Padding(
+                              padding: const EdgeInsets.only(top:18),
+                              child:questionText.containsKey('question')?Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(questionText['question'],style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold,fontFamily: 'OpenSans-Italic'),textAlign: TextAlign.center,),
+                                SizedBox(width:15),
+                                Text("("+questionText['total_marks'].toString()+"M)",style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold),),
+                              ],
+                            ) : Text('No question text added yet, please contact your Teacher',style: TextStyle(color: Colors.white),),
+                          ), 
+                        SizedBox(
+                          height: 10,
+                        )
+                      ],
+                    ),
+                      Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                        height: MediaQuery.of(context).size.height-145,
+                        width: MediaQuery.of(context).size.width,
+                        child: Expanded(
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Choose Image from Gallery'),
+                                IconButton(
+                                  icon: Icon(Icons.insert_drive_file),
+                                  onPressed: () {
+                                    getImage(false);
+                                  },
                                 ),
-                              ),
-                              // Text(_text),
-                            ],
+                                SizedBox(height: 30.0),
+                                Text('Click Image from Camera'),
+                                IconButton(
+                                  icon: Icon(Icons.camera_alt),
+                                  onPressed: () {
+                                    getImage(true);
+                                  },
+                                ),
+                                _image == null
+                                    ? Container()
+                                    : Image.file(
+                                        _image,
+                                        height: 300.0,
+                                        width: 300.0,
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top:58.0),
+                                  child: SizedBox(
+                                    width: 200.0,
+                                    height: 50.0,
+                                    child: RaisedButton(
+                                      color: Color(0xFF6F35A5),
+                                      textColor: Colors.white,
+                                        child: Text("Send Image"),
+                                        shape: RoundedRectangleBorder(
+                                      borderRadius: new BorderRadius.circular(30.0)),
+                                        onPressed: () {
+                                          if (_image != null) {
+                                            SendImage()
+                                                .getExtractedText(_image, questionText['answer'].toString())
+                                                .then((value) {
+                                              print("hello $value");
+                                              setState(() {
+                                                _text = "Answer recordded!";
+                                                _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Answer recorded'),));
+                                                print(value);
+                                              });
+                                              StudentDB().addAnswer(widget.teacherUid, widget.subjectName, widget.questionPaperName, widget.questionNumber, value['text'], value['marks']);
+                                            });
+                                          } else {
+                                            print("Error");
+                                          }
+                                        }),
+                                  ),
+                                ),
+                                // Text(_text),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               } else
                 return Container();

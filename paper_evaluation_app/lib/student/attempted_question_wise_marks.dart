@@ -4,8 +4,9 @@ import 'package:paper_evaluation_app/authentication/user_management.dart';
 class AttemptedQuestionWiseMarks extends StatelessWidget {
   String extractedAnswerText;
   String predictedMarks;
+  String questionNumber;
 
-  AttemptedQuestionWiseMarks(this.extractedAnswerText, this.predictedMarks);
+  AttemptedQuestionWiseMarks(this.extractedAnswerText, this.predictedMarks,this.questionNumber);
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -15,7 +16,10 @@ class AttemptedQuestionWiseMarks extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(0xFF6F35A5),
-        title: Text("Student Dashboard"),
+        title: Text(
+          questionNumber,
+          style: TextStyle(fontSize: 24),
+          ),
         actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext bc) => [

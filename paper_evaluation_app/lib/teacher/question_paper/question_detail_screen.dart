@@ -140,94 +140,73 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                 key: _scaffoldKey,
                 appBar: AppBar(
                   backgroundColor: Color(0xFF6F35A5),
-                  title: Text(widget.questionPaperName),
+                  title: Text(
+                    widget.questionPaperName,
+                    style: TextStyle(fontSize: 24),
+                    ),
                 ),
-                
-              // body:Padding(
-              //   padding: const EdgeInsets.only(top:60.0),
-              //   child: Container(
-              //   decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-              //   height: MediaQuery.of(context).size.height,
-              //   width: MediaQuery.of(context).size.width,
-              //   child: Padding(
-              //     padding: const EdgeInsets.only(top:50.0),
-              //     child: Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       crossAxisAlignment: CrossAxisAlignment.center,
-
-              //       children: [
-                      
-              //         // Text('Question text for ${widget.questionNumber}'),
-              //         questionContent.containsKey('question') ? Text(questionContent['question']) : Text('Add a question please'),
-              //         questionContent.containsKey('total_marks') ? Text(questionContent['total_marks'].toString()) :Text('Add keyphrases to see total marks'),
-              //         questionContent.containsKey('answer') ? Text(questionContent['answer'].toString()) :Text('Add keyphrases'),
-                      
-              //       ],
-              //     ))
-              //   ),
-              // ),
-              body:Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top:18.0),
-                        child: SizedBox(
-                          height: 30,
-                          
-                          child: questionContent.containsKey('question') ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              
-                              Text(questionContent['question'],style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold,),),
-                              SizedBox(width:15),
-                              Text(questionContent['total_marks'].toString(),style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold),),
-                            ],
-                          ) : Text('Add a question please',style: TextStyle(color: Colors.white),),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  ),
-                Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                height: MediaQuery.of(context).size.height-145,
-                width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                    itemCount: questionContent.length,
-                    padding: EdgeInsets.only(top:0),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        // elevation: 5,
-                        child: Container(
-                          height: 80,
-                          child: Container(
-                            padding: const EdgeInsets.only(top:50.0),
-                            child: ListTile(
-                              leading: const Icon(Icons.chevron_right),
-                              tileColor: Colors.white,
-                              title: Text('${questionContent['answer'].keys.elementAt(index)}'),
-							                trailing : Text('${questionContent['answer'][questionContent['answer'].keys.elementAt(index)]}'),
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
-                                // );
-                              },
-                            ),
+              body:SingleChildScrollView(
+                  child: Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top:18.0),
+                          child: questionContent.containsKey('question') ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [  
+                                Text(questionContent['question'],style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+                                SizedBox(width:15),
+                                Text("("+questionContent['total_marks'].toString()+"M)",style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold),),
+                              ],
+                            ) : Text('Add a question please',style: TextStyle(color: Colors.white),),
                           ),
-                        ),
-                      );
-                    }),
+                        SizedBox(
+                          height: 10,
+                        )
+                      ],
+                    ),
+                  Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
+                  height: MediaQuery.of(context).size.height-163,
+                  width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top:50.0),
+                      child: ListView.builder(
+                        itemCount: questionContent['answer'].length,
+                        padding: EdgeInsets.only(top:0),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            // elevation: 5,
+                            child: Container(
+                              //height: 80,
+                              child: Container(
+                                padding: const EdgeInsets.only(top:20.0),
+                                child: ListTile(
+                                  leading: const Icon(Icons.chevron_right),
+                                  tileColor: Colors.white,
+                                  title: Text('${questionContent['answer'].keys.elementAt(index)}'),
+							                trailing : Text('${questionContent['answer'][questionContent['answer'].keys.elementAt(index)]}'),
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
+                                    // );
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                    ),
+                  ),
+                
+                  ],
                 ),
-              
-                ],
               ),
                 floatingActionButton: SpeedDial(
                     marginEnd: 18,

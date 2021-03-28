@@ -52,8 +52,7 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                                 context,
                                 scaffoldKey);
                             scaffoldKey.currentState.setState(() {});
-                          }
-                          else{
+                          } else {
                             Navigator.pop(context);
                             ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
                               content: Text("Please enter all fields"),
@@ -63,8 +62,8 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                         child: Text(
                           'Add Question',
                         ),
-                        color: Theme.of(context).buttonColor,
-                        textColor: Theme.of(context).textTheme.button.color),
+                        color: Color(0xFF6F35A5),
+                        textColor: Colors.white)
                   ],
                 ),
               ),
@@ -126,8 +125,8 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
                         child: Text(
                           'Add Keyphrase',
                         ),
-                        color: Theme.of(context).buttonColor,
-                        textColor: Theme.of(context).textTheme.button.color),
+                        color: Color(0xFF6F35A5),
+                        textColor: Colors.white)
                   ],
                 ),
               ),
@@ -152,74 +151,113 @@ class _QuestionDetailScreenState extends State<QuestionDetailScreen> {
             Map<String, dynamic> questionContent = snapshot.data;
             return Scaffold(
               backgroundColor: Color(0xFF6F35A5),
-                key: _scaffoldKey,
-                appBar: AppBar(
-                  backgroundColor: Color(0xFF6F35A5),
-                  title: Text(
-                    widget.questionPaperName,
-                    style: TextStyle(fontSize: 24),
-                    ),
+              key: _scaffoldKey,
+              appBar: AppBar(
+                backgroundColor: Color(0xFF6F35A5),
+                title: Text(
+                  widget.questionPaperName,
+                  style: TextStyle(fontSize: 24),
                 ),
-              body:SingleChildScrollView(
-                  child: Column(
+              ),
+              body: SingleChildScrollView(
+                child: Column(
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(top:18.0),
-                          child: questionContent.containsKey('question') ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [  
-                                Text(questionContent['question'],style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
-                                SizedBox(width:15),
-                                Text("("+questionContent['total_marks'].toString()+"M)",style: TextStyle(color: Colors.white,fontSize:20,fontWeight: FontWeight.bold),),
-                              ],
-                            ) : Text('Add a question please',style: TextStyle(color: Colors.white),),
-                          ),
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: questionContent.containsKey('question')
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      questionContent['question'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(width: 15),
+                                    Text(
+                                      "(" +
+                                          questionContent['total_marks']
+                                              .toString() +
+                                          "M)",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                )
+                              : Text(
+                                  'Add a question please',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                        ),
                         SizedBox(
                           height: 10,
                         )
                       ],
                     ),
-                  Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)), color: Colors.white),
-                  height: MediaQuery.of(context).size.height-163,
-                  width: MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top:50.0),
-                      child: ListView.builder(
-                        itemCount: questionContent['answer'].length,
-                        padding: EdgeInsets.only(top:0),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            // elevation: 5,
-                            child: Container(
-                              //height: 80,
-                              child: Container(
-                                padding: const EdgeInsets.only(top:20.0),
-                                child: ListTile(
-                                  leading: const Icon(Icons.chevron_right),
-                                  tileColor: Colors.white,
-                                  title: Text('${questionContent['answer'].keys.elementAt(index)}'),
-							                trailing : Text('${questionContent['answer'][questionContent['answer'].keys.elementAt(index)]}'),
-                                  onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
-                                    // );
-                                  },
-                                ),
-                              ),
+                    questionContent.containsKey('answer')
+                        ? Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(60),
+                                    topLeft: Radius.circular(60)),
+                                color: Colors.white),
+                            height: MediaQuery.of(context).size.height - 163,
+                            width: MediaQuery.of(context).size.width,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 50.0),
+                              child: ListView.builder(
+                                  itemCount: questionContent['answer'].length,
+                                  padding: EdgeInsets.only(top: 0),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      // elevation: 5,
+                                      child: Container(
+                                        //height: 80,
+                                        child: Container(
+                                          padding:
+                                              const EdgeInsets.only(top: 20.0),
+                                          child: ListTile(
+                                            leading:
+                                                const Icon(Icons.chevron_right),
+                                            tileColor: Colors.white,
+                                            title: Text(
+                                                '${questionContent['answer'].keys.elementAt(index)}'),
+                                            trailing: Text(
+                                                '${questionContent['answer'][questionContent['answer'].keys.elementAt(index)]}'),
+                                            onTap: () {
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           QuestionPaperDetailScreen(questionPaperList[index],widget.subjectName)),
+                                              // );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
                             ),
-                          );
-                        }),
-                    ),
-                  ),
-                
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(60),
+                                    topLeft: Radius.circular(60)),
+                                color: Colors.white),
+                            height: MediaQuery.of(context).size.height - 163,
+                            width: MediaQuery.of(context).size.width,
+                            child: Container()),
                   ],
                 ),
               ),

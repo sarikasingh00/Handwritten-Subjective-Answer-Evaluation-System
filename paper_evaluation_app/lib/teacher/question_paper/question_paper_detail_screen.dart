@@ -98,9 +98,10 @@ class _QuestionPaperDetailScreenState extends State<QuestionPaperDetailScreen> {
                                   context,
                                   _scaffoldKey);
                               setState(() {});
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                content: Text('New Question Added'),
-                              ));
+                              // _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              //   content: Text('New Question Added'),
+                              // ));
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('New Question Added'),));
                             },
                           ),
                         ),

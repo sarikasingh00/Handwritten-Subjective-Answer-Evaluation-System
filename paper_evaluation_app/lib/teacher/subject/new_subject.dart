@@ -22,6 +22,10 @@ class _NewSubjectState extends State<NewSubject> {
       Navigator.of(widget.mainContext).pushReplacementNamed('/teacher_dashboard');
       // setState(() {});
     }
+    else{
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter the name of subject please"),));
+    }
     // return subjectadded;
   }
 

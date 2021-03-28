@@ -27,8 +27,8 @@ class _StudentDashboardState extends State<StudentDashboard> {
           backgroundColor: Colors.transparent,
           title: Text('Student Dashboard'),
           bottom: TabBar(
-            indicatorColor: Colors.yellow,
-            labelColor: Colors.yellow,
+            indicatorColor: Colors.red.shade200,
+            labelColor: Colors.red.shade200,
             unselectedLabelColor: Colors.white,
             tabs: <Widget>[
               Tab(

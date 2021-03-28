@@ -25,7 +25,9 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    //  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
     return Scaffold(
+      // key: _scaffoldKey ,
       body: Back(
         child: SingleChildScrollView(
           child: Column(
@@ -117,6 +119,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         .storeNewUser(signedInUser.user, _role, _name, context);
                   }).catchError((e) {
                     print(e);
+                    // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields"),));
+                    // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Please fill all fields")));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error Signing Up"),));
                   });
                 },
               ),
@@ -126,7 +131,8 @@ class _SignupScreenState extends State<SignupScreen> {
               FlatButton(
                 child: Text("Already have an account? Login here!"),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/loginpage');
+                  // Navigator.of(context).pushReplacementNamed('/loginpage');
+                  Navigator.pop(context);
                 },
               ),
             ],

@@ -12,6 +12,7 @@ class LoadAndViewCsvPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Excel Data'),
+        backgroundColor:Color(0xFF6F35A5),
       ),
       body: FutureBuilder(
         future: _loadCsvData(),
@@ -29,9 +30,9 @@ class LoadAndViewCsvPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 // Name
-                                Text(row[0]),
+                                row[0] == 'Name' ? Text(row[0],style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20), ): Text(row[0]),
                                 //Coach
-                                Text('${row[1]}'),
+                                row[1] == 'Marks' ? Text(row[1].toString(),style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),): Text(row[1].toString()),
                               ],
                             ),
                           ),

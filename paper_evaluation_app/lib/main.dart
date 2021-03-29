@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:paper_evaluation_app/splash_screen.dart';
 import './teacher/teacher_dashboard.dart';
@@ -57,6 +59,7 @@ class MyApp extends StatelessWidget {
               return SplashScreen();
             } else {
               if (snapshot.hasData) {
+                // Timer(Duration(seconds: 10),(){print("complete");});
                 if (snapshot.data == 'Not Logged In')
                   return LoginScreen();
                 else if (snapshot.data == 'Teacher')
